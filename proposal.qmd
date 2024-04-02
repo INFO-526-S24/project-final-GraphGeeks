@@ -32,9 +32,14 @@ Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock ins
 #| label: load-dataset
 #| message: false
 
-# day_wise_data <- read_csv("./data/day_wise.csv")
-# country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
-# vaccination_data <- read_csv("./data/country_vaccinations.csv")
+day_wise_data <- read_csv("./data/day_wise.csv")
+country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
+vaccination_data <- read_csv("./data/country_vaccinations.csv")
+
+
+glimpse(day_wise_data)
+glimpse(country_wise_latest_data)
+glimpse(vaccination_data)
 ```
 
 ## Description
@@ -51,7 +56,7 @@ The datasets for this project were sourced from a comprehensive `Kaggle collecti
 How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
 
 ### Question 2
-What are the patterns and impacts of COVID-19 in the USA at a state and county level, especially in relation to vaccination rates?
+What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different countries?
 
 
 ## Analysis plan
@@ -77,21 +82,17 @@ Correlation coefficients between the different metrics will be calculated and vi
 
 ### For the second question:
 
-Dataset: The `usa_county_wise_data` dataset will be our focus, offering detailed insights into COVID-19's impact across different states and counties in the USA and `vaccination` dataset provides the details of vaccian all over the world.
+**Dataset Utilization**: We will employ the `usa_county_wise_data` dataset, which is rich in localized COVID-19 data for the United States, encompassing each county's case and vaccination figures. And `vaccination` dataset provides the details of vaccian all over the world.
 
-**Focus**: We'll examine the distribution and trends of cases and vaccination rates, aiming to uncover geographical patterns and correlations.
 
-**Visualizations:**
+**Primary Focus**: Our primary objective is to dissect and understand the spatial distribution and temporal evolution of COVID-19 cases alongside vaccination rates across the U.S. counties, aiming to identify any significant geographical patterns or correlations.
 
--  Choropleth maps will be utilized to display the intensity of cases and vaccination rates across different regions, enabling a quick visual grasp of geographical disparities.
+**Visualizations**
 
--  Bubble maps could complement our geographical analysis by representing the number of cases or vaccination rates in different counties, with bubble sizes corresponding to the metric of interest.
+-  Choropleth Maps: We will craft choropleth maps to visually represent the density or intensity of COVID-19 cases and vaccination rates across U.S. counties. This will enable a straightforward interpretation of regional variances and trends.
 
--  We plan to create time-lapse visualizations of these maps to depict how the pandemic and vaccination efforts have evolved over time within the USA.
+-  Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
-**Additional Analysis:**
+-  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
 
--  We'll investigate correlations between vaccination rates and case reductions using scatter plots, potentially adjusting for factors like population density and demographics.
 
--  Regression analysis might be employed to quantify the relationship between vaccination rates and case reductions, offering a predictive insight into the effectiveness of vaccinations at a county level.
-For a deeper understanding, we may segment the data into time frames or phases, such as pre-vaccination and post-vaccination periods, to analyze the shifts in trends.
