@@ -32,16 +32,16 @@ Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock ins
 #| label: load-dataset
 #| message: false
 
-day_wise_data <- read_csv("./data/day_wise.csv")
-country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
-vaccination_data <- read_csv("./data/country_vaccinations.csv")
+# day_wise_data <- read_csv("./data/day_wise.csv")
+# country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
+# vaccination_data <- read_csv("./data/country_vaccinations.csv")
 ```
 
 ## Description
 
 The datasets for this project were sourced from a comprehensive `Kaggle collection` maintained by "imdevskp," focusing on various aspects of the COVID-19 pandemic. These include day-wise global statistics, country-wise latest data, detailed data grouped by country and date, and USA-specific county-wise data. Each dataset provides a range of metrics such as case counts, deaths, recoveries, and vaccinations, enabling a multifaceted analysis of the pandemic. 
 
-* The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
+-  The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
 #### [Dataset Source](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)
 
@@ -63,13 +63,17 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 **Focus**: Our analysis will concentrate on total cases, recoveries, and deaths, offering a comprehensive view of the pandemic's evolution over time.
 
 **Visualizations:**
-* Time-series plots will be our primary tool, showcasing how each of these metrics has evolved daily. We will create separate line graphs for total cases, recoveries, and deaths, as well as a combined graph to facilitate direct comparisons.
-* To further understand the dynamics, we'll calculate and plot the daily percentage changes for each metric, providing insights into the pandemic's velocity at different stages.
+
+-  Time-series plots will be our primary tool, showcasing how each of these metrics has evolved daily. We will create separate line graphs for total cases, recoveries, and deaths, as well as a combined graph to facilitate direct comparisons.
+
+-  To further understand the dynamics, we'll calculate and plot the daily percentage changes for each metric, providing insights into the pandemic's velocity at different stages.
 Correlation coefficients between the different metrics will be calculated and visualized using scatter plots, helping us understand the relationships between cases, recoveries, and deaths over time.
 
 **Additional Analysis:**
-* We will perform a rolling average analysis to smooth out the data, making trends more discernible.
-Anomaly detection might be applied to identify any unusual changes in the data, which could signify important events or turning points in the pandemic's course.
+
+-  We will perform a rolling average analysis to smooth out the data, making trends more discernible.
+
+-  Anomaly detection might be applied to identify any unusual changes in the data, which could signify important events or turning points in the pandemic's course.
 
 ### For the second question:
 
@@ -78,11 +82,16 @@ Dataset: The `usa_county_wise_data` dataset will be our focus, offering detailed
 **Focus**: We'll examine the distribution and trends of cases and vaccination rates, aiming to uncover geographical patterns and correlations.
 
 **Visualizations:**
-* Choropleth maps will be utilized to display the intensity of cases and vaccination rates across different regions, enabling a quick visual grasp of geographical disparities.
-* Bubble maps could complement our geographical analysis by representing the number of cases or vaccination rates in different counties, with bubble sizes corresponding to the metric of interest.
-* We plan to create time-lapse visualizations of these maps to depict how the pandemic and vaccination efforts have evolved over time within the USA.
+
+-  Choropleth maps will be utilized to display the intensity of cases and vaccination rates across different regions, enabling a quick visual grasp of geographical disparities.
+
+-  Bubble maps could complement our geographical analysis by representing the number of cases or vaccination rates in different counties, with bubble sizes corresponding to the metric of interest.
+
+-  We plan to create time-lapse visualizations of these maps to depict how the pandemic and vaccination efforts have evolved over time within the USA.
 
 **Additional Analysis:**
-* We'll investigate correlations between vaccination rates and case reductions using scatter plots, potentially adjusting for factors like population density and demographics.
-Regression analysis might be employed to quantify the relationship between vaccination rates and case reductions, offering a predictive insight into the effectiveness of vaccinations at a county level.
+
+-  We'll investigate correlations between vaccination rates and case reductions using scatter plots, potentially adjusting for factors like population density and demographics.
+
+-  Regression analysis might be employed to quantify the relationship between vaccination rates and case reductions, offering a predictive insight into the effectiveness of vaccinations at a county level.
 For a deeper understanding, we may segment the data into time frames or phases, such as pre-vaccination and post-vaccination periods, to analyze the shifts in trends.
