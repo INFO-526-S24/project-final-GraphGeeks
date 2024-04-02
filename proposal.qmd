@@ -39,7 +39,7 @@ vaccination_data <- read_csv("./data/country_vaccinations.csv")
 
 ## Description
 
-The datasets for this project were sourced from a comprehensive Kaggle collection maintained by "imdevskp," focusing on various aspects of the COVID-19 pandemic. These include day-wise global statistics, country-wise latest data, detailed data grouped by country and date, and USA-specific county-wise data. Each dataset provides a range of metrics such as case counts, deaths, recoveries, and vaccinations, enabling a multifaceted analysis of the pandemic. 
+The datasets for this project were sourced from a comprehensive `Kaggle collection` maintained by "imdevskp," focusing on various aspects of the COVID-19 pandemic. These include day-wise global statistics, country-wise latest data, detailed data grouped by country and date, and USA-specific county-wise data. Each dataset provides a range of metrics such as case counts, deaths, recoveries, and vaccinations, enabling a multifaceted analysis of the pandemic. 
 
 * The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
