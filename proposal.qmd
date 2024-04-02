@@ -36,10 +36,12 @@ day_wise_data <- read_csv("./data/day_wise.csv")
 country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
 vaccination_data <- read_csv("./data/country_vaccinations.csv")
 
+# Data glimpse 
 
 glimpse(day_wise_data)
 glimpse(country_wise_latest_data)
 glimpse(vaccination_data)
+
 ```
 
 ## Description
