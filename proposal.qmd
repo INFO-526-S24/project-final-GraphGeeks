@@ -24,11 +24,13 @@ execute:
 #| message: false
 library(tidyverse)
 ```
-## Introduction 
+
+## Introduction
 
 Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock insights into the pandemic's dynamics through advanced data visualization. By analyzing case counts, recovery rates, mortality, and vaccination data, we aim to reveal trends and correlations across different regions and periods. This endeavor transcends academic boundaries, aiming to provide actionable insights for policymakers and the public. Through our analysis, we aspire to transform complex data into clear, insightful narratives, aiding in the informed response to this global health crisis.
 
 ## Dataset
+
 ```{r}
 #| label: load-dataset
 #| message: false
@@ -49,49 +51,47 @@ print(head(vaccination_data))
 
 ## Description
 
+-   The datasets employed for this project are derived from an extensive collection on Kaggle, curated by "imdevskp," which meticulously compiles data pertaining to the COVID-19 pandemic from multiple global sources. This collection encompasses a variety of datasets, each tailored to different analytical needs: day-wise global statistics offer a temporal view of the pandemic's progression, country-wise latest data provide a snapshot of the current status in each country, and detailed data grouped by country and date facilitate a comparative analysis over time.
 
-- The datasets employed for this project are derived from an extensive collection on Kaggle, curated by "imdevskp," which meticulously compiles data pertaining to the COVID-19 pandemic from multiple global sources. This collection encompasses a variety of datasets, each tailored to different analytical needs: day-wise global statistics offer a temporal view of the pandemic's progression, country-wise latest data provide a snapshot of the current status in each country, and detailed data grouped by country and date facilitate a comparative analysis over time.
+-   Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
 
-- Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
+-   To enhance the interactive exploration and visualization of this data, we are utilizing the **shiny package** in R, a powerful tool for creating interactive web applications. The Shiny app will allow users to **dynamically filter**, explore, and visualize the data, offering an immersive and user-driven analysis experience that highlights the depth and complexity of the COVID-19 pandemic data.
 
-- To enhance the interactive exploration and visualization of this data, we are utilizing the **shiny package** in R, a powerful tool for creating interactive web applications. The Shiny app will allow users to **dynamically filter**, explore, and visualize the data, offering an immersive and user-driven analysis experience that highlights the depth and complexity of the COVID-19 pandemic data.
+-   The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
--  The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
+[**COVID-19 Dataset Source Link**](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv) And [**vaccination Dataset Source Link**](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)
 
-**[COVID-19 Dataset Source Link](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)**   And   **[vaccination Dataset Source Link](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)**
-
-
-| Variable                       | Description                                                                 |
-|--------------------------------|-----------------------------------------------------------------------------|
-| Date                           | Date of the record, crucial for any time-series analysis.                  |
-| Country/Region                 | Name of the country or region, essential for geographic comparisons.       |
-| Confirmed                      | Total confirmed COVID-19 cases, a primary metric for pandemic assessment.  |
-| Deaths                         | Total deaths due to COVID-19, important for understanding the fatality rate.|
-| Recovered                      | Total recoveries from COVID-19, indicative of the recovery rate.            |
-| Active                         | Total active COVID-19 cases, key for current pandemic status assessment.   |
-| New cases                      | New cases on a given date, vital for identifying trends over time.         |
-| New deaths                     | New deaths on a given date, important for tracking fatality trends.        |
-| New recovered                  | New recoveries on a given date, useful for monitoring recovery trends.     |
-| Deaths / 100 Cases             | Percentage of deaths per 100 confirmed cases, provides context to the death toll. |
-| Recovered / 100 Cases          | Percentage of recoveries per 100 confirmed cases, gives insight into the recovery trend. |
-| Deaths / 100 Recovered         | Percentage of deaths per 100 recovered cases, helps understand the severity among recovered cases. |
-| total_vaccinations             | Total vaccinations administered, crucial for vaccination trend analysis.   |
-| people_vaccinated              | Total individuals vaccinated, key for understanding the vaccination reach. |
-| people_fully_vaccinated        | Total individuals fully vaccinated, important for assessing herd immunity potential. |
-| daily_vaccinations             | Number of vaccinations administered per day, essential for daily trend analysis. |
-| total_vaccinations_per_hundred | Total vaccinations per 100 people, allows for normalized comparison between regions. |
-| people_vaccinated_per_hundred  | People vaccinated per 100 people, useful for comparing vaccination rates.  |
+| Variable                            | Description                                                                                             |
+|----------------------|--------------------------------------------------|
+| Date                                | Date of the record, crucial for any time-series analysis.                                               |
+| Country/Region                      | Name of the country or region, essential for geographic comparisons.                                    |
+| Confirmed                           | Total confirmed COVID-19 cases, a primary metric for pandemic assessment.                               |
+| Deaths                              | Total deaths due to COVID-19, important for understanding the fatality rate.                            |
+| Recovered                           | Total recoveries from COVID-19, indicative of the recovery rate.                                        |
+| Active                              | Total active COVID-19 cases, key for current pandemic status assessment.                                |
+| New cases                           | New cases on a given date, vital for identifying trends over time.                                      |
+| New deaths                          | New deaths on a given date, important for tracking fatality trends.                                     |
+| New recovered                       | New recoveries on a given date, useful for monitoring recovery trends.                                  |
+| Deaths / 100 Cases                  | Percentage of deaths per 100 confirmed cases, provides context to the death toll.                       |
+| Recovered / 100 Cases               | Percentage of recoveries per 100 confirmed cases, gives insight into the recovery trend.                |
+| Deaths / 100 Recovered              | Percentage of deaths per 100 recovered cases, helps understand the severity among recovered cases.      |
+| total_vaccinations                  | Total vaccinations administered, crucial for vaccination trend analysis.                                |
+| people_vaccinated                   | Total individuals vaccinated, key for understanding the vaccination reach.                              |
+| people_fully_vaccinated             | Total individuals fully vaccinated, important for assessing herd immunity potential.                    |
+| daily_vaccinations                  | Number of vaccinations administered per day, essential for daily trend analysis.                        |
+| total_vaccinations_per_hundred      | Total vaccinations per 100 people, allows for normalized comparison between regions.                    |
+| people_vaccinated_per_hundred       | People vaccinated per 100 people, useful for comparing vaccination rates.                               |
 | people_fully_vaccinated_per_hundred | People fully vaccinated per 100 people, important for understanding comprehensive vaccination progress. |
-
 
 ## Questions
 
 ### Question 1
+
 How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
 
 ### Question 2
-What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different countries?
 
+What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different countries?
 
 ## Analysis plan
 
@@ -103,54 +103,46 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 **Visualizations:**
 
--  Time-series plots will be our primary tool, showcasing how each of these metrics has evolved daily. We will create separate line graphs for total cases, recoveries, and deaths, as well as a combined graph to facilitate direct comparisons.
+-   Time-series plots will be our primary tool, showcasing how each of these metrics has evolved daily. We will create separate line graphs for total cases, recoveries, and deaths, as well as a combined graph to facilitate direct comparisons.
 
--  To further understand the dynamics, we'll calculate and plot the daily percentage changes for each metric, providing insights into the pandemic's velocity at different stages.
-Correlation coefficients between the different metrics will be calculated and visualized using scatter plots, helping us understand the relationships between cases, recoveries, and deaths over time.
+-   To further understand the dynamics, we'll calculate and plot the daily percentage changes for each metric, providing insights into the pandemic's velocity at different stages. Correlation coefficients between the different metrics will be calculated and visualized using scatter plots, helping us understand the relationships between cases, recoveries, and deaths over time.
 
 **Additional Analysis:**
 
--  We will perform a rolling average analysis to smooth out the data, making trends more discernible.
+-   We will perform a rolling average analysis to smooth out the data, making trends more discernible.
 
--  Anomaly detection might be applied to identify any unusual changes in the data, which could signify important events or turning points in the pandemic's course.
+-   Anomaly detection might be applied to identify any unusual changes in the data, which could signify important events or turning points in the pandemic's course.
 
 **Interactive Visualization with Shiny:**
 
-- To make our analysis more interactive and user-friendly, we will utilize the shiny package in R to develop a web application. This application will allow users to dynamically interact with the data through filters such as year, country name, and regions. Users can select specific parameters to refine the visualizations, providing a customized view that can highlight trends and patterns of interest within the global scope of the COVID-19 pandemic. 
+-   To make our analysis more interactive and user-friendly, we will utilize the shiny package in R to develop a web application. This application will allow users to dynamically interact with the data through filters such as year, country name, and regions. Users can select specific parameters to refine the visualizations, providing a customized view that can highlight trends and patterns of interest within the global scope of the COVID-19 pandemic.
 
-- This dynamic approach will enable users to explore the data in a more granular and personalized manner, enhancing the analytical value of the visualizations.
-
+-   This dynamic approach will enable users to explore the data in a more granular and personalized manner, enhancing the analytical value of the visualizations.
 
 ### For the second question:
 
 **Dataset Utilization**: We will employ the `usa_county_wise_data` dataset, which is rich in localized COVID-19 data for the United States, encompassing each county's case and vaccination figures. And `vaccination` dataset provides the details of vaccian all over the world.
 
-
 **Primary Focus**: Our primary objective is to dissect and understand the spatial distribution and temporal evolution of COVID-19 cases alongside vaccination rates across the U.S. counties, aiming to identify any significant geographical patterns or correlations.
 
 **Visualizations**
 
--  Choropleth Maps: We will craft choropleth maps to visually represent the density or intensity of COVID-19 cases and vaccination rates across U.S. counties. This will enable a straightforward interpretation of regional variances and trends.
+-   Choropleth Maps: We will craft choropleth maps to visually represent the density or intensity of COVID-19 cases and vaccination rates across U.S. counties. This will enable a straightforward interpretation of regional variances and trends.
 
--  Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
+-   Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
--  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
-
- ::: columns
-::: {.column width="50%"}
+-   Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
 
 ### Plan of Action
 
-| Task Name | Status | Assignee | Due | Priority | Summary | 
-| ----------| -------|----------|-----|----------|---------|
-| Proposal Description | Completed | Rajitha Reddy, Omid Zandi, Devendran | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
-| Dataset | In progress | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
-| Questions | Completed | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate| The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.|
-| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
-|TimeLine and Work Flow | Completed | G Sai Laasya Mrunali Yadav| 03 Apr 2024 | Moderate | The work flow of the project |
-|Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
-::: {.column width="50%"}
-![](images/Timeli.jpg)
-:::
+| Task Name               | Status      | Assignee                                          | Due         | Priority | Summary                                                                                                                                                                                                |
+|------------|------------|------------|------------|------------|------------|
+| Proposal Description    | Completed   | Rajitha Reddy, Omid Zandi, Devendran              | 03 Apr 2024 | Moderate | Concise summary outlining the main idea of a proposal                                                                                                                                                  |
+| Dataset                 | In progress | Devendran Vemula , Gowtham GopalaKrishnan         | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset                                                                                                                                                                      |
+| Questions               | Completed   | Everyone                                          | 03 Apr 2024 | Moderate | Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights                                                                                                      |
+| Analysis for Question 1 | Completed   | Devendran Vemula , G Sai Laasya , Rajitha Reddy   | 03 Apr 2024 | Moderate | The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.                                                                |
+| Analysis for Question 2 | Completed   | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
+| TimeLine and Work Flow  | Completed   | G Sai Laasya Mrunali Yadav                        | 03 Apr 2024 | Moderate | The work flow of the project                                                                                                                                                                           |
+| Proposal Peer Review    | Completed   | Everyone                                          | 03 Apr 2024 | Moderate | Reviewing Other Teams                                                                                                                                                                                  |
 
+![](images/Timeli.jpg){fig-align="center" width="200"}
