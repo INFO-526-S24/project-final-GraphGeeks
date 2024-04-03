@@ -1,5 +1,5 @@
 ---
-title: "Tracing the COVID-19 Trajectory Using Shiny"
+title: "Tracing the COVID-19 Trajectory Using **Shiny**"
 subtitle: "Proposal"
 author: 
   - name: "**GraphGeeks** - Devendran, Omid, G Sai Laasya"
@@ -27,7 +27,7 @@ library(tidyverse)
 
 ## Introduction
 
-Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock insights into the pandemic's dynamics through advanced data visualization. By analyzing case counts, recovery rates, mortality, and vaccination data, we aim to reveal trends and correlations across different regions and periods. This endeavor transcends academic boundaries, aiming to provide actionable insights for policymakers and the public. Through our analysis, we aspire to transform complex data into clear, insightful narratives, aiding in the informed response to this global health crisis.
+Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock insights into the pandemic's dynamics through advanced data visualization, utilizing the `Shiny app package` for interactive user experiences. By analyzing case counts, recovery rates, mortality, and vaccination data, we aim to reveal trends and correlations across different regions and periods. This endeavor transcends academic boundaries, aiming to provide actionable insights for policymakers and the public. Through our analysis, which includes dynamic and interactive visualizations made possible by Shiny, we aspire to transform complex data into clear, insightful narratives, aiding in the informed response to this global health crisis.
 
 ## Dataset
 
