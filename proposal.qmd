@@ -27,6 +27,7 @@ library(tidyverse)
 
 Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock insights into the pandemic's dynamics through advanced data visualization. By analyzing case counts, recovery rates, mortality, and vaccination data, we aim to reveal trends and correlations across different regions and periods. This endeavor transcends academic boundaries, aiming to provide actionable insights for policymakers and the public. Through our analysis, we aspire to transform complex data into clear, insightful narratives, aiding in the informed response to this global health crisis.
 
+
 ## Dataset
 ```{r}
 #| label: load-dataset
