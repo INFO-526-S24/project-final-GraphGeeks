@@ -1,6 +1,6 @@
 # project-final
 
-# GraphGeeks - Tracing the COVID-19 Trajectory
+## GraphGeeks - Tracing the COVID-19 Trajectory
 
 The project analyzes COVID-19 trends and vaccination impacts globally and in the USA, using visualizations to reveal key patterns and insights.
 # AUTHORS
