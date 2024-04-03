@@ -1,15 +1,19 @@
 ---
-title: "About"
+title: "Tracing the COVID-19 Trajectory"
 format: html
 editor: visual
 ---
 
-This project was developed by **\[Team Name\]** For [INFO 526 - Data Analysis & Visualization](https://datavizaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
+This project was developed by **\[GraphGeeks\]** For [INFO 526 - Data Analysis & Visualization](https://datavizaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
 
--   Team member 1: One sentence description of Team member 1 (e.g., year, major, etc.).
+-   Devendran : 1st year, MS Student, Data Science, School of Information
 
--   Team member 2: One sentence description of Team member 2 (e.g., year, major, etc.).
+-   Omid Zandi: Second Year Phd Student in Hydrology and Atmospheric Sciences
 
--   Team member 3: One sentence description of Team member 3 (e.g., year, major, etc.).
+-   G Sai Laasya : 1st year, MS Student, Information Science, School of Information
 
--   Team member 4: One sentence description of Team member 4 (e.g., year, major, etc.).
+-   Rajitha Reddy Tiruthani: 1st year, MS Student, Data Science, School of Information
+
+-   Gowtham : 1st year, MS Student, Data Science, School of Information
+
+-   Mrunali : 1st year, MS Student, Data Science, School of Information
