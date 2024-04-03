@@ -33,9 +33,17 @@ Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock ins
 #| label: load-dataset
 #| message: false
 
+
+
+# Dataset Head
 day_wise_data <- read_csv("./data/day_wise.csv")
+print(head(day_wise_data))
+
 country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
+print(head(country_wise_latest_data))
+
 vaccination_data <- read_csv("./data/country_vaccinations.csv")
+print(head(vaccination_data))
 
 ```
 
@@ -144,6 +152,5 @@ Correlation coefficients between the different metrics will be calculated and vi
 |Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
 ::: {.column width="50%"}
 ![](images/Timeli.jpg)
-:::
 :::
 
