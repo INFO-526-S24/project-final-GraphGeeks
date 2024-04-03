@@ -91,7 +91,7 @@ How has the COVID-19 pandemic trended globally over time, and what correlations 
 
 ### Question 2
 
-What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different countries?
+What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
 
 ## Analysis plan
 
@@ -99,19 +99,19 @@ What is the relationship between total vaccinations and the reduction in active 
 
 Dataset: We will utilize the `day_wise_data` dataset, which provides daily global statistics on COVID-19.
 
-**Focus**: Our analysis will concentrate on total cases, recoveries, and deaths, offering a comprehensive view of the pandemic's evolution over time.
+**Focus**:  Our refined analysis will focus on daily total cases, recoveries, and deaths to observe the pandemic's evolution over time without losing granularity in the data.
 
 **Visualizations:**
 
--   Time-series plots will be our primary tool, showcasing how each of these metrics has evolved daily. We will create separate line graphs for total cases, recoveries, and deaths, as well as a combined graph to facilitate direct comparisons.
+-   **Time-Series Plots**: We'll employ time-series plots to illustrate the daily evolution of total cases, recoveries, and deaths, with separate line graphs for each metric and a combined graph for direct comparison.
 
--   To further understand the dynamics, we'll calculate and plot the daily percentage changes for each metric, providing insights into the pandemic's velocity at different stages. Correlation coefficients between the different metrics will be calculated and visualized using scatter plots, helping us understand the relationships between cases, recoveries, and deaths over time.
+-   **Daily Percentage Changes**: To capture the pandemic's dynamics, we'll calculate and plot daily percentage changes for each metric. Additionally, we'll compute and visualize correlation coefficients to explore the relationships between these metrics over time.
 
 **Additional Analysis:**
 
--   We will perform a rolling average analysis to smooth out the data, making trends more discernible.
+-  Rolling Average Analysis: While our primary focus will be on daily data, we'll also use rolling averages to identify broader trends, ensuring we capture both immediate changes and more extended patterns.
 
--   Anomaly detection might be applied to identify any unusual changes in the data, which could signify important events or turning points in the pandemic's course.
+- Anomaly Detection: We plan to identify and analyze any unusual data points or trends, which could indicate significant pandemic events or turning points.
 
 **Interactive Visualization with Shiny:**
 
@@ -123,28 +123,29 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 **Dataset Utilization**: We will employ the `usa_county_wise_data` dataset, which is rich in localized COVID-19 data for the United States, encompassing each county's case and vaccination figures. And `vaccination` dataset provides the details of vaccian all over the world.
 
-**Primary Focus**: Our primary objective is to dissect and understand the spatial distribution and temporal evolution of COVID-19 cases alongside vaccination rates across the U.S. counties, aiming to identify any significant geographical patterns or correlations.
+**Primary Focus**: We aim to analyze and visualize how COVID-19 cases and vaccination rates have evolved over time across U.S. counties and globally, identifying patterns and correlations.
 
 **Visualizations**
 
--   Choropleth Maps: We will craft choropleth maps to visually represent the density or intensity of COVID-19 cases and vaccination rates across U.S. counties. This will enable a straightforward interpretation of regional variances and trends.
+-   **Choropleth Maps**: We will craft choropleth maps to visually represent the density or intensity of COVID-19 cases and vaccination rates across U.S. counties. This will enable a straightforward interpretation of regional variances and trends.
 
--   Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
+-   **Bubble Maps**: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
--   Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
+-   **Time-Lapse Visualizations**: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
 
 ### Plan of Action
 
-| Task Name               | Status      | Assignee                                          | Due         | Priority | Summary                                                                                                                                                                                                |
-|------------|------------|------------|------------|------------|------------|
-| Data Collection    | Incomplete   | Rajitha Reddy, Omid Zandi, Devendran              | 06 Apr 2024 | Moderate | Collection of neccessary data                                      |
-| Data Exploration    | Incomplete | Devendran Vemula , Gowtham GopalaKrishnan         | 06 Apr 2024 | Moderate | Cleaning, transformation, Integration of data                                                                                                                                                                      |
-| Q1 Time series plot    | Incomplete   | Everyone                                          | 07 Apr 2024 | Moderate | Make mandatory time series plot for the question                                        |
-| Q1 Scatter plot | Incomplete   | Devendran Vemula , G Sai Laasya , Rajitha Reddy   | 07 Apr 2024 | Moderate | Make a scatter plot                                                               |
-| Q2 Identify trends and patterns | Incomplete   | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 07 Apr 2024 | Moderate | analysing the terends and patterns |
-| Q2 Anomaly detection  | Incomplete   | G Sai Laasya Mrunali Yadav                        | 09 Apr 2024 | Moderate | Detect the anomaly in the spread of the pandemic                                                                                                                                                                           |
-| Q2 Chloropleth map & Bubble maps  | Incomplete   | Omid, Rajitha                                          | 09 Apr 2024 | Moderate | Make chloropleth maps                                                                                                                                                                                  |
-| Q2 Spatial map    | Incomplete   | Everyone                                          | 10 Apr 2024 | Moderate | Spatial map |
+| Task Name                 | Status      | Assignee                                       | Due         | Priority | Summary                                                                           |
+|---------------------------|-------------|------------------------------------------------|-------------|----------|-----------------------------------------------------------------------------------|
+| Data Collection           | Incomplete  | Rajitha Reddy, Omid Zandi, Devendran          | 06 Apr 2024 | Moderate | Collection of necessary data                                                     |
+| Data Exploration          | Incomplete  | Devendran Vemula, Gowtham GopalaKrishnan      | 06 Apr 2024 | Moderate | Cleaning, transformation, integration of data                                    |
+| Q1 Time Series Plot       | Incomplete  | Everyone                                       | 07 Apr 2024 | Moderate | Create mandatory time series plots for the question                              |
+| Q1 Scatter Plot           | Incomplete  | Devendran Vemula, G Sai Laasya, Rajitha Reddy  | 07 Apr 2024 | Moderate | Generate a scatter plot                                                          |
+| Q2 Identify Trends and Patterns | Incomplete  | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 07 Apr 2024 | Moderate | Analyze the trends and patterns                                                  |
+| Q2 Anomaly Detection      | Incomplete  | G Sai Laasya, Mrunali Yadav                    | 09 Apr 2024 | Moderate | Detect anomalies in the spread of the pandemic                                  |
+| Q2 Choropleth Map & Bubble Maps | Incomplete  | Omid, Rajitha                                 | 09 Apr 2024 | Moderate | Create choropleth and bubble maps                                                |
+| Q2 Spatial Map            | Incomplete  | Everyone                                       | 10 Apr 2024 | Moderate | Develop a spatial map                                                            |
+| Presentation & Write-Up   | Incomplete  | Everyone                                       | 15 Apr 2024 | Moderate | Prepare the presentation and write-up                                           |
 
-| Presentation & Write up   | Incomplete   | Everyone                                          | 15 Apr 2024 | Moderate | Make presentation & working on writeup |
-![](images/Timeli.jpg){fig-align="center" width="300"}
+
+![](images/Timeli.jpg){fig-align="center" width="500"}
