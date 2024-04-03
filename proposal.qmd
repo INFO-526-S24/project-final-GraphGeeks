@@ -47,8 +47,6 @@ vaccination_data <- read_csv("./data/country_vaccinations.csv")
 
 - To enhance the interactive exploration and visualization of this data, we are utilizing the shiny package in R, a powerful tool for creating interactive web applications. The Shiny app will allow users to dynamically filter, explore, and visualize the data, offering an immersive and user-driven analysis experience that highlights the depth and complexity of the COVID-19 pandemic data.
 
-- Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
-
 -  The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
 **[Dataset Source Link](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)**
@@ -121,5 +119,17 @@ Correlation coefficients between the different metrics will be calculated and vi
 -  Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
 -  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
+
+
+### Plan of Attack
+
+| Task Name | Status | Assignee | Due | Priority | Summary | 
+| ----------| -------|----------|-----|----------|---------|
+| Proposal Description | Completed | Rajitha Reddy, Omid Zandi | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
+| Dataset | In progress | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
+| Questions | Completed | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+|Proposal Peer Review |Pending | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
 
 
