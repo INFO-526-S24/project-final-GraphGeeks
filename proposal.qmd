@@ -50,7 +50,7 @@ vaccination_data <- read_csv("./data/country_vaccinations.csv")
 
 -  The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
-**[Dataset Source Link](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)**
+**[COVID-19 Dataset Source Link](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)**   And   **[vaccination Dataset Source Link](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)**
 
 
 | Variable                       | Description                                                                 |
