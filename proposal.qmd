@@ -41,7 +41,11 @@ vaccination_data <- read_csv("./data/country_vaccinations.csv")
 ## Description
 
 
-- The datasets employed for this project are derived from an extensive `collection on Kaggle`, curated by "imdevskp," which meticulously compiles data pertaining to the COVID-19 pandemic from multiple global sources. This collection encompasses a variety of datasets, each tailored to different analytical needs: day-wise global statistics offer a temporal view of the pandemic's progression, country-wise latest data provide a snapshot of the current status in each country, and detailed data grouped by country and date facilitate a comparative analysis over time. 
+- The datasets employed for this project are derived from an extensive collection on Kaggle, curated by "imdevskp," which meticulously compiles data pertaining to the COVID-19 pandemic from multiple global sources. This collection encompasses a variety of datasets, each tailored to different analytical needs: day-wise global statistics offer a temporal view of the pandemic's progression, country-wise latest data provide a snapshot of the current status in each country, and detailed data grouped by country and date facilitate a comparative analysis over time.
+
+- Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
+
+- To enhance the interactive exploration and visualization of this data, we are utilizing the shiny package in R, a powerful tool for creating interactive web applications. The Shiny app will allow users to dynamically filter, explore, and visualize the data, offering an immersive and user-driven analysis experience that highlights the depth and complexity of the COVID-19 pandemic data.
 
 - Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
 
@@ -117,17 +121,5 @@ Correlation coefficients between the different metrics will be calculated and vi
 -  Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
 -  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
-
-
-### Plan of Attack
-
-| Task Name | Status | Assignee | Due | Priority | Summary | 
-| ----------| -------|----------|-----|----------|---------|
-| Proposal Description | Completed | Rajitha Reddy, Omid Zandi | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
-| Dataset | In progress | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
-| Questions | In progress | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-|Proposal Peer Review |Pending | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
 
 
