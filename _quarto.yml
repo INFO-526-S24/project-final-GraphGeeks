@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: COVID-19
+  title: Tracing the COVID-19 Trajectory Using Shiny
   navbar:
     right:
       - icon: github
