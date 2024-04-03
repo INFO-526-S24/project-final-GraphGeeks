@@ -128,6 +128,8 @@ Correlation coefficients between the different metrics will be calculated and vi
 
 -  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
 
+ ::: columns
+::: {.column width="50%"}
 
 ### Plan of Action
 
@@ -136,8 +138,12 @@ Correlation coefficients between the different metrics will be calculated and vi
 | Proposal Description | Completed | Rajitha Reddy, Omid Zandi, Devendran | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
 | Dataset | In progress | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
 | Questions | Completed | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-|Proposal Peer Review |Pending | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
-
+| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate| The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.|
+| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
+|TimeLine and Work Flow | Completed | G Sai Laasya Mrunali Yadav| 03 Apr 2024 | Moderate | The work flow of the project |
+|Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
+::: {.column width="50%"}
+![](images/Timeli.jpg)
+:::
+:::
 
