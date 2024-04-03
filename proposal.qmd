@@ -1,11 +1,11 @@
 ---
-title: "Proposal title"
+title: "Tracing the COVID-19 Trajectory"
 subtitle: "Proposal"
 author: 
-  - name: "Team Name - Team member 1, Team member 2,..."
+  - name: "GraphGeeks - Devendran Vemula, "
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Project description"
+description: "The project analyzes COVID-19 trends and vaccination impacts globally and in the USA, using visualizations to reveal key patterns and insights."
 format:
   html:
     code-tools: true
@@ -36,21 +36,42 @@ day_wise_data <- read_csv("./data/day_wise.csv")
 country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
 vaccination_data <- read_csv("./data/country_vaccinations.csv")
 
-# Data glimpse 
-
-glimpse(day_wise_data)
-glimpse(country_wise_latest_data)
-glimpse(vaccination_data)
-
 ```
 
 ## Description
 
-The datasets for this project were sourced from a comprehensive `Kaggle collection` maintained by "imdevskp," focusing on various aspects of the COVID-19 pandemic. These include day-wise global statistics, country-wise latest data, detailed data grouped by country and date, and USA-specific county-wise data. Each dataset provides a range of metrics such as case counts, deaths, recoveries, and vaccinations, enabling a multifaceted analysis of the pandemic. 
+
+- The datasets employed for this project are derived from an extensive `collection on Kaggle`, curated by "imdevskp," which meticulously compiles data pertaining to the COVID-19 pandemic from multiple global sources. This collection encompasses a variety of datasets, each tailored to different analytical needs: day-wise global statistics offer a temporal view of the pandemic's progression, country-wise latest data provide a snapshot of the current status in each country, and detailed data grouped by country and date facilitate a comparative analysis over time. 
+
+- Additionally, there is a dataset specifically focused on the USA, breaking down statistics to the county level, which allows for a more granular examination within the United States. These datasets collectively encompass critical metrics such as case counts, deaths, recoveries, and vaccination figures, equipping researchers with a robust toolkit for a comprehensive and nuanced analysis of the pandemic's multifarious impacts and trends.
 
 -  The choice of these datasets was motivated by their depth, regular updates, and the potential insights they offer into the global and localized impacts of COVID-19.
 
-#### [Dataset Source](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)
+**[Dataset Source Link](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv)**
+
+
+| Variable                       | Description                                                                 |
+|--------------------------------|-----------------------------------------------------------------------------|
+| Date                           | Date of the record, crucial for any time-series analysis.                  |
+| Country/Region                 | Name of the country or region, essential for geographic comparisons.       |
+| Confirmed                      | Total confirmed COVID-19 cases, a primary metric for pandemic assessment.  |
+| Deaths                         | Total deaths due to COVID-19, important for understanding the fatality rate.|
+| Recovered                      | Total recoveries from COVID-19, indicative of the recovery rate.            |
+| Active                         | Total active COVID-19 cases, key for current pandemic status assessment.   |
+| New cases                      | New cases on a given date, vital for identifying trends over time.         |
+| New deaths                     | New deaths on a given date, important for tracking fatality trends.        |
+| New recovered                  | New recoveries on a given date, useful for monitoring recovery trends.     |
+| Deaths / 100 Cases             | Percentage of deaths per 100 confirmed cases, provides context to the death toll. |
+| Recovered / 100 Cases          | Percentage of recoveries per 100 confirmed cases, gives insight into the recovery trend. |
+| Deaths / 100 Recovered         | Percentage of deaths per 100 recovered cases, helps understand the severity among recovered cases. |
+| total_vaccinations             | Total vaccinations administered, crucial for vaccination trend analysis.   |
+| people_vaccinated              | Total individuals vaccinated, key for understanding the vaccination reach. |
+| people_fully_vaccinated        | Total individuals fully vaccinated, important for assessing herd immunity potential. |
+| daily_vaccinations             | Number of vaccinations administered per day, essential for daily trend analysis. |
+| total_vaccinations_per_hundred | Total vaccinations per 100 people, allows for normalized comparison between regions. |
+| people_vaccinated_per_hundred  | People vaccinated per 100 people, useful for comparing vaccination rates.  |
+| people_fully_vaccinated_per_hundred | People fully vaccinated per 100 people, important for understanding comprehensive vaccination progress. |
+
 
 ## Questions
 
