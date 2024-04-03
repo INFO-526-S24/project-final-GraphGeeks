@@ -27,7 +27,6 @@ library(tidyverse)
 
 Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock insights into the pandemic's dynamics through advanced data visualization. By analyzing case counts, recovery rates, mortality, and vaccination data, we aim to reveal trends and correlations across different regions and periods. This endeavor transcends academic boundaries, aiming to provide actionable insights for policymakers and the public. Through our analysis, we aspire to transform complex data into clear, insightful narratives, aiding in the informed response to this global health crisis.
 
-
 ## Dataset
 ```{r}
 #| label: load-dataset
@@ -118,5 +117,17 @@ Correlation coefficients between the different metrics will be calculated and vi
 -  Bubble Maps: To enhance our spatial analysis, bubble maps will be constructed where each bubble's size indicates either the number of cases or vaccination rates in counties, offering a dual perspective on the pandemic's magnitude and the vaccination effort.
 
 -  Time-Lapse Visualizations: Implementing time-lapse maps will allow us to observe and analyze the progression of the pandemic and vaccination rollout over time, providing dynamic insights into how the situation has evolved across different regions.
+
+
+### Plan of Attack
+
+| Task Name | Status | Assignee | Due | Priority | Summary | 
+| ----------| -------|----------|-----|----------|---------|
+| Proposal Description | Completed | Rajitha Reddy, Omid Zandi | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
+| Dataset | In progress | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
+| Questions | In progress | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+|Proposal Peer Review |Pending | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
 
 
