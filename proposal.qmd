@@ -134,10 +134,12 @@ Correlation coefficients between the different metrics will be calculated and vi
 | Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
 |TimeLine and Work Flow | Completed | G Sai Laasya Mrunali Yadav| 03 Apr 2024 | Moderate | The work flow of the project |
 |Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
-
-| Working on the Bubble Map | Incomplete | G Sai Laasya | 10 Apr 2024 | Moderate | Making a bubble map on the COVID dataset|
-| Spatial Map | Incomplete | Omid Zandi | 10 Apr 2024 | Moderate | Creating the spatial maps for the number of cases |
-| Time Lapse Visualization | Incomplete | Devendran Vemula | 10 Apr 2024 | Moderate | The progress on the COVID cases or Vaccination |
+| Working on the Bubble Map | Completed | G Sai Laasya, Rajitha Reddy | 06 Apr 2024 | Moderate | Making a bubble map on the COVID dataset|
+| Spatial Map | Completed | Omid Zandi | 10 Apr 2024 | Moderate | Creating the spatial maps for the number of cases |
+| Time Lapse Visualization | Completed | Devendran Vemula | 12 Apr 2024 | Moderate | The progress on the COVID cases or Vaccination |
+| Working on the Index.qmd file | Incomplete |  G Sai Laasya, Rajitha Reddy, Mrunali Yadav | 15 Apr 2024 | High |Writing the analysis, summary part |
+| Adding aesthethics to ShinyApp | Incomplete |Devendran Vemula, Omid Zandi | 17 Apr 2024 | Moderate | Adding the aesthethics |
+| Presnetation | Incomplete |  Devendran Vemula, Gowtham GopalaKrishnan | 20 Apr 2024 | High | Creating the presentation |
 ::: {.column width="50%"}
 ![](images/Timeli.jpg)
 :::
