@@ -17,5 +17,120 @@ execute:
   echo: false
 ---
 
+#### Loading the required libraries
+
+```{r, warning = FALSE, message = FALSE}
+
+#Installing libraries
+if(!require('pacman'))
+  installed.packages('pacman')
+
+#Loading the packages
+pacman::p_load(
+  ggplot,
+  readr,
+  tidyr,
+  dplyr,
+  RColorBrewer,
+  gganimate,
+  plotly,
+  shiny,
+  lubridate,
+  maps
+)
+
+```
+
+#### Setting up the Theme
+
+```{r}
+
+#Setting the theme 
+ggplot2::theme_set(ggplot2::theme_minimal(base_size = 11))
+
+# Figure resolution
+knitr::opts_chunk$set(
+  fig.retina = 3, 
+  dpi = 300, 
+  fig.width = 6, 
+  fig.asp = 0.618 
+  )
+
+
+
+```
+
+# Loading the dataset
+
 ```{}
+```
+
+```{}
+```
+
+```{r}
+
+#Looking into the vaccination dataset
+
+data <- read_csv('data/country_vaccinations_by_manufacturer.csv')
+
+
+```
+
+```{}
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(shiny)
+library(leaflet)
+library(ggplot2)
+library(maps)
+
+
+# Load world map data for leaflet
+world <- map_data("world")
+
+ui <- fluidPage(
+    titlePanel("Vaccination Data by Manufacturer"),
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("country", "Select Country", choices = unique(data$location))
+        ),
+        mainPanel(
+            leafletOutput("map"),
+            plotOutput("vaccination_plot")
+        )
+    )
+)
+
+server <- function(input, output, session) {
+    
+    # Render Leaflet map
+    output$map <- renderLeaflet({
+        leaflet(data = world) %>%
+            addProviderTiles("CartoDB.Positron") %>%
+            setView(lng = 0, lat = 30, zoom = 2) %>%
+            addPolygons(fillColor = "lightblue", weight = 1, smoothFactor = 0.5, fillOpacity = 0.8)
+    })
+    
+    # Update map and plot based on selected country
+    observeEvent(input$country, {
+        selected_country_data <- data[data$location == input$country, ]
+        
+        # Update plot
+        output$vaccination_plot <- renderPlot({
+            ggplot(selected_country_data, aes(x = date, y = total_vaccinations, fill = vaccine)) +
+                geom_col(stat = "identity") +
+                labs(title = paste("Vaccination Progress in", input$country),
+                     x = "Date",
+                     y = "Total Vaccinations",
+                     fill = "Vaccine") +
+                theme_minimal()
+        })
+    })
+}
+
+shinyApp(ui = ui, server = server)
+
+
 ```
