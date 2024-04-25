@@ -38,15 +38,28 @@ Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock ins
 
 
 # Dataset Head
-day_wise_data <- read_csv("./data/day_wise.csv")
-print(head(day_wise_data))
+us_confirmed <- read_csv("./data/us_confirmed.csv")
+print(head(us_confirmed))
 
-country_wise_latest_data <- read_csv("./data/country_wise_latest.csv")
-print(head(country_wise_latest_data))
+us_deaths <- read_csv("./data/us_deaths.csv")
+print(head(us_deaths))
 
 vaccination_data <- read_csv("./data/country_vaccinations.csv")
 print(head(vaccination_data))
 
+
+countries_agg <- read_csv("./data/countries-aggregated.csv")
+head(countries_agg)
+
+populations <- read_csv('./data/populations.csv')
+head(populations)
+
+country_vaccinations_manufacture <-  read_csv('./data/country_vaccinations_by_manufacturer.csv')
+head(country_vaccinations_manufacture)
+
+
+countries <- read_csv('./data/countries.csv')
+head(countries)
 ```
 
 ## Description
@@ -62,7 +75,7 @@ print(head(vaccination_data))
 [**COVID-19 Dataset Source Link**](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv) And [**vaccination Dataset Source Link**](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)
 
 | Variable                            | Description                                                                                             |
-|----------------------|--------------------------------------------------|
+|----------------------|-------------------------------------------------|
 | Date                                | Date of the record, crucial for any time-series analysis.                                               |
 | Country/Region                      | Name of the country or region, essential for geographic comparisons.                                    |
 | Confirmed                           | Total confirmed COVID-19 cases, a primary metric for pandemic assessment.                               |
@@ -99,7 +112,7 @@ What is the relationship between total vaccinations and the reduction in active 
 
 Dataset: We will utilize the `day_wise_data` dataset, which provides daily global statistics on COVID-19.
 
-**Focus**:  Our refined analysis will focus on daily total cases, recoveries, and deaths to observe the pandemic's evolution over time without losing granularity in the data.
+**Focus**: Our refined analysis will focus on daily total cases, recoveries, and deaths to observe the pandemic's evolution over time without losing granularity in the data.
 
 **Visualizations:**
 
@@ -109,9 +122,9 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 **Additional Analysis:**
 
--  Rolling Average Analysis: While our primary focus will be on daily data, we'll also use rolling averages to identify broader trends, ensuring we capture both immediate changes and more extended patterns.
+-   Rolling Average Analysis: While our primary focus will be on daily data, we'll also use rolling averages to identify broader trends, ensuring we capture both immediate changes and more extended patterns.
 
-- Anomaly Detection: We plan to identify and analyze any unusual data points or trends, which could indicate significant pandemic events or turning points.
+-   Anomaly Detection: We plan to identify and analyze any unusual data points or trends, which could indicate significant pandemic events or turning points.
 
 **Interactive Visualization with Shiny:**
 
@@ -135,17 +148,16 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 ### Plan of Action
 
-| Task Name                 | Status      | Assignee                                       | Due         | Priority | Summary                                                                           |
-|---------------------------|-------------|------------------------------------------------|-------------|----------|-----------------------------------------------------------------------------------|
-| Data Collection           | Incomplete  | Rajitha Reddy, Omid Zandi, Devendran          | 06 Apr 2024 | Moderate | Collection of necessary data                                                     |
-| Data Exploration          | Incomplete  | Devendran Vemula, Gowtham GopalaKrishnan      | 06 Apr 2024 | Moderate | Cleaning, transformation, integration of data                                    |
-| Q1 Time Series Plot       | Incomplete  | Everyone                                       | 07 Apr 2024 | Moderate | Create mandatory time series plots for the question                              |
-| Q1 Scatter Plot           | Incomplete  | Devendran Vemula, G Sai Laasya, Rajitha Reddy  | 07 Apr 2024 | Moderate | Generate a scatter plot                                                          |
-| Q2 Identify Trends and Patterns | Incomplete  | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 07 Apr 2024 | Moderate | Analyze the trends and patterns                                                  |
-| Q2 Anomaly Detection      | Incomplete  | G Sai Laasya, Mrunali Yadav                    | 09 Apr 2024 | Moderate | Detect anomalies in the spread of the pandemic                                  |
-| Q2 Choropleth Map & Bubble Maps | Incomplete  | Omid, Rajitha                                 | 09 Apr 2024 | Moderate | Create choropleth and bubble maps                                                |
-| Q2 Spatial Map            | Incomplete  | Everyone                                       | 10 Apr 2024 | Moderate | Develop a spatial map                                                            |
-| Presentation & Write-Up   | Incomplete  | Everyone                                       | 15 Apr 2024 | Moderate | Prepare the presentation and write-up                                           |
-
+| Task Name                       | Status     | Assignee                                          | Due         | Priority | Summary                                             |
+|----------|----------|----------|----------|----------|----------------------|
+| Data Collection                 | completed  | Rajitha Reddy, Omid Zandi, Devendran              | 06 Apr 2024 | Moderate | Collection of necessary data                        |
+| Data Exploration                | completed  | Devendran Vemula, Gowtham GopalaKrishnan          | 06 Apr 2024 | Moderate | Cleaning, transformation, integration of data       |
+| Q1 Time Series Plot             | Incomplete | Everyone                                          | 07 Apr 2024 | Moderate | Create mandatory time series plots for the question |
+| Q1 Scatter Plot                 | completed  | Devendran Vemula, G Sai Laasya, Rajitha Reddy     | 07 Apr 2024 | Moderate | Generate a scatter plot                             |
+| Q2 Identify Trends and Patterns | completed  | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 07 Apr 2024 | Moderate | Analyze the trends and patterns                     |
+| Q2 Anomaly Detection            | completed  | G Sai Laasya, Mrunali Yadav                       | 09 Apr 2024 | Moderate | Detect anomalies in the spread of the pandemic      |
+| Q2 Choropleth Map & Bubble Maps | completed  | Omid, Rajitha                                     | 09 Apr 2024 | Moderate | Create choropleth and bubble maps                   |
+| Q2 Spatial Map                  | completed  | Everyone                                          | 10 Apr 2024 | Moderate | Develop a spatial map                               |
+| Presentation & Write-Up         | completed  | Everyone                                          | 15 Apr 2024 | Moderate | Prepare the presentation and write-up               |
 
 ![](images/Timeli.jpg){fig-align="center" width="500"}
