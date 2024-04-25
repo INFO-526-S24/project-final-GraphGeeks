@@ -1,27 +1,50 @@
 # Load necessary libraries
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, shiny, shinythemes, readr)
+pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata)
 
 # Set global options and themes
 theme_set(theme_minimal(base_size = 14))
 options(width = 65)
 
 # Load and prepare data
-global_data <- read_csv("./data/countries.csv") %>% 
-  mutate(Date = as.Date(Date)) %>%
-  pivot_longer(cols = c(Confirmed, Recovered, Deaths),
-               names_to = "Case_Type",
-               values_to = "Cases") %>%
-  mutate(Case_Type = tolower(gsub(" ", "_", Case_Type))) %>% 
-  na.omit()
+global_data <- read_csv("./data/countries.csv") %>%
+    mutate(Date = as.Date(Date)) %>%
+    pivot_longer(
+        cols = c(Confirmed, Recovered, Deaths),
+        names_to = "Case_Type",
+        values_to = "Cases"
+    ) %>%
+    mutate(Case_Type = tolower(gsub(" ", "_", Case_Type))) %>%
+    na.omit()
 
 us_confirmed <- read_csv("./data/us_confirmed.csv") %>%
-  mutate(Date = as.Date(Date)) %>%
-  na.omit()
+    mutate(Date = as.Date(Date)) %>%
+    na.omit()
 
 us_deaths <- read_csv("./data/us_deaths.csv") %>%
-  mutate(Date = as.Date(Date)) %>%
-  na.omit()
+    mutate(Date = as.Date(Date)) %>%
+    na.omit()
+
+
+
+# maps logic
+
+# Removing some rows
+global_data <- global_data %>%
+    filter(!Country %in% c(
+        "Winter Olympics 2022",
+        "Summer Olympics 2020",
+        "Diamond Princess",
+        "MS Zaandam",
+        "Antarctica"
+    ))
+
+# Geting the countries choices
+countries_choices <- global_data |>
+    distinct(Country) |>
+    arrange(Country) |>
+    pull(Country)
+
 
 # Define UI
 ui <- fluidPage(
@@ -30,16 +53,19 @@ ui <- fluidPage(
         theme = "cerulean",
         title = "COVID-19 Analysis",
         id = "main_navbar",
-        tabPanel("Time Series",
+        tabPanel(
+            "Time Series",
             sidebarLayout(
                 sidebarPanel(
                     uiOutput("dynamicInput"),
-                    dateRangeInput("dateRange", "Select Date Range:", 
-                                   start = min(global_data$Date, na.rm = TRUE), 
-                                   end = max(global_data$Date, na.rm = TRUE))
+                    dateRangeInput("dateRange", "Select Date Range:",
+                        start = min(global_data$Date, na.rm = TRUE),
+                        end = max(global_data$Date, na.rm = TRUE)
+                    )
                 ),
                 mainPanel(
-                    tabsetPanel(id = "tabs",
+                    tabsetPanel(
+                        id = "tabs",
                         tabPanel("Global Trends", plotOutput("globalPlot")),
                         tabPanel("US Confirmed Cases", plotOutput("usConfirmedPlot")),
                         tabPanel("US Deaths", plotOutput("usDeathsPlot")),
@@ -48,8 +74,25 @@ ui <- fluidPage(
                 )
             )
         ),
-        tabPanel("Maps",
-            "Maps content will go here. This can include interactive maps or other geographical visualizations."
+        tabPanel(
+            "Maps",
+            sidebarLayout(
+                sidebarPanel(
+                    uiOutput("mapInput"),
+                    dateRangeInput("mapDateRange", "Select Date Range:",
+                        start = min(global_data$Date, na.rm = TRUE),
+                        end = max(global_data$Date, na.rm = TRUE),
+                        min = min(global_data$Date, na.rm = TRUE),
+                        max = max(global_data$Date, na.rm = TRUE)
+                    ),
+                    selectInput("caseType", "Select Case Type",
+                        choices = c("Confirmed" = "confirmed", "Recovered" = "recovered", "Deaths" = "deaths")
+                    )
+                ),
+                mainPanel(
+                    leafletOutput("mapPlot")
+                )
+            )
         )
     )
 )
@@ -64,20 +107,21 @@ server <- function(input, output, session) {
         }
     })
 
+
     filtered_data <- reactive({
         if (!is.null(input$country) && !is.null(input$dateRange)) {
             global_data %>%
                 filter(Country == input$country, Date >= input$dateRange[1], Date <= input$dateRange[2])
         } else {
-            data.frame()  # Return an empty data frame if inputs are not ready
+            data.frame() # Return an empty data frame if inputs are not ready
         }
     })
+
 
     # Define colors for case types
     case_colors <- c("confirmed" = "blue", "recovered" = "green", "deaths" = "red")
 
-
-   output$globalPlot <- renderPlot({
+    output$globalPlot <- renderPlot({
         data_to_plot <- filtered_data()
         if (nrow(data_to_plot) > 0) {
             # Creating a plot
@@ -95,21 +139,23 @@ server <- function(input, output, session) {
                     strip.text = element_blank(),
                     panel.border = element_rect(colour = "black", fill = NA, size = 1),
                     panel.spacing = unit(1, "lines"),
-                    legend.position = "none"  # Remove traditional legend
+                    legend.position = "none" # Remove traditional legend
                 )
 
             # Add labels for each case type at the top left
-           
+
             labels_to_add <- data_to_plot %>%
                 group_by(Case_Type) %>%
-                summarize(Cases = max(Cases), Date = first(Date), .groups = 'drop') 
+                summarize(Cases = max(Cases), Date = first(Date), .groups = "drop")
 
 
             # Using geom_text to add labels directly on the graph
             for (i in 1:nrow(labels_to_add)) {
                 label_color <- case_colors[labels_to_add$Case_Type[i]]
-                p <- p + geom_text(data = labels_to_add[i, ], aes(label = paste(Case_Type)),
-                                   hjust = 0, vjust = 1.5, size = 5, fontface = "bold", color = label_color)
+                p <- p + geom_text(
+                    data = labels_to_add[i, ], aes(label = paste(Case_Type)),
+                    hjust = 0, vjust = 1.5, size = 5, fontface = "bold", color = label_color
+                )
             }
 
             p
@@ -120,7 +166,7 @@ server <- function(input, output, session) {
     })
 
 
- # Plots for US data
+    # Plots for US data
 
     output$usConfirmedPlot <- renderPlot({
         if (!is.null(input$county) && !is.null(input$dateRange)) {
@@ -151,28 +197,28 @@ server <- function(input, output, session) {
     })
 
 
-
-    # combined data
-
+    # combain plot
     output$usCombinedPlot <- renderPlot({
         if (!is.null(input$county) && !is.null(input$dateRange)) {
             # Filtering and merging the confirmed and death data
             filtered_confirmed <- us_confirmed %>%
                 filter(`Province/State` == input$county, Date >= input$dateRange[1], Date <= input$dateRange[2])
-            
+
             filtered_deaths <- us_deaths %>%
                 filter(`Province/State` == input$county, Date >= input$dateRange[1], Date <= input$dateRange[2])
-            
+
             # Combining the data
             combined_data <- merge(filtered_confirmed, filtered_deaths, by = c("Date", "Province/State"), suffixes = c("_confirmed", "_deaths"))
-            
+
             # Plotting the data
             ggplot() +
                 geom_line(data = combined_data, aes(x = Date, y = Case_confirmed, color = "Confirmed Cases"), size = 1) +
                 geom_line(data = combined_data, aes(x = Date, y = Case_deaths, color = "Deaths"), size = 1) +
-                labs(title = "Daily COVID-19 Statistics in the US (Confirmed Cases and Deaths)",
-                     x = "Date", y = "Number of Cases",
-                     color = "Statistic") +
+                labs(
+                    title = "Daily COVID-19 Statistics in the US (Confirmed Cases and Deaths)",
+                    x = "Date", y = "Number of Cases",
+                    color = "Statistic"
+                ) +
                 scale_color_manual(values = c("Confirmed Cases" = "yellow", "Deaths" = "red")) +
                 theme_minimal() +
                 theme(
@@ -189,7 +235,57 @@ server <- function(input, output, session) {
             plot.new()
             text(0.5, 0.5, "Select a county and date range", cex = 1.5)
         }
-    })}
+    })
 
+    print(names(global_data))
+
+
+    # Map logic for displaying data
+  output$mapPlot <- renderLeaflet({
+    req(input$mapDateRange)  # Ensure date range is selected
+
+    # Filter data for the selected date range and case type
+    selected_data <- global_data %>%
+        filter(Date >= input$mapDateRange[1], Date <= input$mapDateRange[2], 
+               Case_Type == input$caseType) %>%
+        group_by(Country) %>%
+        summarize(Cases = sum(Cases), .groups = "drop")  # Sum cases over the period for each country
+
+    # Prepare world map data
+    world <- ne_countries(scale = "medium", returnclass = "sf")
+
+    # Join world map data with the filtered COVID data
+    world_data <- left_join(world, selected_data, by = c("name" = "Country"))
+
+    # Create the map only if there are cases to display
+    if(any(!is.na(world_data$Cases))) {
+        pal <- colorBin("YlOrRd", domain = world_data$Cases, bins = 10, na.color = "#808080")
+
+        leaflet(world_data) %>%
+            addProviderTiles(providers$CartoDB.Positron) %>%
+            addPolygons(
+                fillColor = ~pal(Cases),
+                fillOpacity = 0.7,
+                color = "#BDBDC3",
+                weight = 0.5,
+                popup = ~paste(name, "<br>", "Cases: ", Cases)
+            ) %>%
+            addLegend(
+                "bottomright",
+                pal = pal,
+                values = ~Cases,
+                title = "Number of Cases",
+                opacity = 0.7
+            )
+    } else {
+        # Handle case where no data is available
+        leaflet() %>%
+            addTiles() %>%
+            addMarkers(lng = 0, lat = 0, popup = "No data available for the selected criteria.")
+    }
+})
+
+
+}
 # Run the application
 shinyApp(ui = ui, server = server)
