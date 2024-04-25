@@ -25,25 +25,18 @@ us_deaths <- read_csv("./data/us_deaths.csv") %>%
     mutate(Date = as.Date(Date)) %>%
     na.omit()
 
+vaccination_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv") %>%
+    mutate(date = as.Date(date, format = "%Y-%m-%d")) %>%
+    group_by(location) %>%
+    # Summarize to find the maximum total vaccinations and get the associated date
+    summarize(
+        Total_Vaccinations = max(total_vaccinations, na.rm = TRUE),
+        date = date[which.max(total_vaccinations)],
+        .groups = "drop"
+    ) %>%
+    arrange(desc(Total_Vaccinations))
 
-
-# maps logic
-
-# Removing some rows
-global_data <- global_data %>%
-    filter(!Country %in% c(
-        "Winter Olympics 2022",
-        "Summer Olympics 2020",
-        "Diamond Princess",
-        "MS Zaandam",
-        "Antarctica"
-    ))
-
-# Geting the countries choices
-countries_choices <- global_data |>
-    distinct(Country) |>
-    arrange(Country) |>
-    pull(Country)
+print(vaccination_data)
 
 
 # Define UI
@@ -93,6 +86,22 @@ ui <- fluidPage(
                     leafletOutput("mapPlot")
                 )
             )
+        ),
+        tabPanel(
+            "Vaccination",
+            sidebarLayout(
+                sidebarPanel(
+                    dateRangeInput("vaccineDateRange", "Select Date Range for Vaccination Data:",
+                        start = as.Date("2020-12-29"),
+                        end = as.Date("2022-03-29"),
+                        min = as.Date("2020-12-29"),
+                        max = as.Date("2022-03-29")
+                    )
+                ),
+                mainPanel(
+                    plotOutput("vaccinePlot")
+                )
+            )
         )
     )
 )
@@ -107,7 +116,6 @@ server <- function(input, output, session) {
         }
     })
 
-
     filtered_data <- reactive({
         if (!is.null(input$country) && !is.null(input$dateRange)) {
             global_data %>%
@@ -116,7 +124,6 @@ server <- function(input, output, session) {
             data.frame() # Return an empty data frame if inputs are not ready
         }
     })
-
 
     # Define colors for case types
     case_colors <- c("confirmed" = "blue", "recovered" = "green", "deaths" = "red")
@@ -143,11 +150,9 @@ server <- function(input, output, session) {
                 )
 
             # Add labels for each case type at the top left
-
             labels_to_add <- data_to_plot %>%
                 group_by(Case_Type) %>%
                 summarize(Cases = max(Cases), Date = first(Date), .groups = "drop")
-
 
             # Using geom_text to add labels directly on the graph
             for (i in 1:nrow(labels_to_add)) {
@@ -158,16 +163,14 @@ server <- function(input, output, session) {
                 )
             }
 
-            p
+            return(p)
         } else {
             plot.new()
             text(0.5, 0.5, "No data available", cex = 1.5)
         }
     })
 
-
     # Plots for US data
-
     output$usConfirmedPlot <- renderPlot({
         if (!is.null(input$county) && !is.null(input$dateRange)) {
             us_data <- us_confirmed %>%
@@ -196,8 +199,7 @@ server <- function(input, output, session) {
         }
     })
 
-
-    # combain plot
+    # Combined plot logic
     output$usCombinedPlot <- renderPlot({
         if (!is.null(input$county) && !is.null(input$dateRange)) {
             # Filtering and merging the confirmed and death data
@@ -237,55 +239,95 @@ server <- function(input, output, session) {
         }
     })
 
-    print(names(global_data))
-
-
     # Map logic for displaying data
-  output$mapPlot <- renderLeaflet({
-    req(input$mapDateRange)  # Ensure date range is selected
+    output$mapPlot <- renderLeaflet({
+        req(input$mapDateRange)  # Ensure date range is selected
 
-    # Filter data for the selected date range and case type
-    selected_data <- global_data %>%
-        filter(Date >= input$mapDateRange[1], Date <= input$mapDateRange[2], 
-               Case_Type == input$caseType) %>%
-        group_by(Country) %>%
-        summarize(Cases = sum(Cases), .groups = "drop")  # Sum cases over the period for each country
+        # Filter data for the selected date range and case type
+        selected_data <- global_data %>%
+            filter(Date >= input$mapDateRange[1], Date <= input$mapDateRange[2], 
+                   Case_Type == input$caseType) %>%
+            group_by(Country) %>%
+            summarize(Cases = sum(Cases), .groups = "drop")  # Sum cases over the period for each country
 
-    # Prepare world map data
-    world <- ne_countries(scale = "medium", returnclass = "sf")
+        # Prepare world map data
+        world <- ne_countries(scale = "medium", returnclass = "sf")
 
-    # Join world map data with the filtered COVID data
-    world_data <- left_join(world, selected_data, by = c("name" = "Country"))
+        # Join world map data with the filtered COVID data
+        world_data <- left_join(world, selected_data, by = c("name" = "Country"))
 
-    # Create the map only if there are cases to display
-    if(any(!is.na(world_data$Cases))) {
-        pal <- colorBin("YlOrRd", domain = world_data$Cases, bins = 10, na.color = "#808080")
+        # Create the map only if there are cases to display
+        if(any(!is.na(world_data$Cases))) {
+            pal <- colorBin("YlOrRd", domain = world_data$Cases, bins = 10, na.color = "#808080")
 
-        leaflet(world_data) %>%
-            addProviderTiles(providers$CartoDB.Positron) %>%
-            addPolygons(
-                fillColor = ~pal(Cases),
-                fillOpacity = 0.7,
-                color = "#BDBDC3",
-                weight = 0.5,
-                popup = ~paste(name, "<br>", "Cases: ", Cases)
-            ) %>%
-            addLegend(
-                "bottomright",
-                pal = pal,
-                values = ~Cases,
-                title = "Number of Cases",
-                opacity = 0.7
-            )
-    } else {
-        # Handle case where no data is available
-        leaflet() %>%
-            addTiles() %>%
-            addMarkers(lng = 0, lat = 0, popup = "No data available for the selected criteria.")
-    }
+            leaflet(world_data) %>%
+                addProviderTiles(providers$CartoDB.Positron) %>%
+                addPolygons(
+                    fillColor = ~pal(Cases),
+                    fillOpacity = 0.7,
+                    color = "#BDBDC3",
+                    weight = 0.5,
+                    popup = ~paste(name, "<br>", "Cases: ", Cases)
+                ) %>%
+                addLegend(
+                    "bottomright",
+                    pal = pal,
+                    values = ~Cases,
+                    title = "Number of Cases",
+                    opacity = 0.7
+                )
+        } else {
+            # Handle case where no data is available
+            leaflet() %>%
+                addTiles() %>%
+                addMarkers(lng = 0, lat = 0, popup = "No data available for the selected criteria.")
+        }
+    })
+
+    # Vaccination tab logic
+    # Vaccination tab logic
+output$vaccinePlot <- renderPlot({
+    req(input$vaccineDateRange)  # Ensure date range is selected
+
+
+
+
+    # Print to console for debugging
+    print(str(vaccination_data$date))
+    print(input$vaccineDateRange)
+
+
+
+
+    # Filter vaccination data within the selected date range
+
+
+        vaccine_data_filtered <- vaccination_data %>%
+        filter(date >= input$vaccineDateRange[1], date <= input$vaccineDateRange[2]) %>%
+        group_by(location) %>%
+        summarize(Total_Vaccinations = max(total_vaccinations, na.rm = TRUE), .groups = "drop") %>%
+        arrange(desc(Total_Vaccinations)) %>%
+        slice_max(order_by = Total_Vaccinations, n = 10)  
+
+
+
+    # Join with global data to get cases for these top 10 vaccinated countries within the date range
+    global_data_filtered <- global_data %>%
+        filter(Country %in% vaccine_data_filtered$location & Date >= input$vaccineDateRange[1] & Date <= input$vaccineDateRange[2]) %>%
+        group_by(Country, Case_Type) %>%
+        summarize(Total_Cases = sum(Cases, na.rm = TRUE), .groups = "drop")
+
+    # Create a bar plot to show cases for the top 10 vaccinated countries
+    ggplot(global_data_filtered, aes(x = Country, y = Total_Cases, fill = Case_Type)) +
+        geom_bar(stat = "identity", position = "dodge") +
+        theme_minimal() +
+        labs(title = "COVID-19 Case Types in Top 10 Vaccinated Countries",
+             x = "Country", y = "Total Cases",
+             fill = "Case Type")
 })
 
 
 }
+
 # Run the application
 shinyApp(ui = ui, server = server)
