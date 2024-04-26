@@ -17,7 +17,7 @@ execute:
   echo: false
 ---
 
-#### Loading the required libraries
+## 
 
 ```{r, warning = FALSE, message = FALSE}
 
@@ -33,15 +33,12 @@ pacman::p_load(
   dplyr,
   RColorBrewer,
   gganimate,
-  plotly,
-  shiny,
-  lubridate,
-  maps
+  plotly
 )
 
 ```
 
-#### Setting up the Theme
+###### Setting up the theme
 
 ```{r}
 
@@ -60,77 +57,45 @@ knitr::opts_chunk$set(
 
 ```
 
-# Loading the dataset
+###### Loading the data set
 
-```{}
-```
+```{r, warning = FALSE, message = FALSE}
 
-```{}
-```
+usa_county_wise <- read_csv('https://raw.githubusercontent.com/INFO-526-S24/project-final-GraphGeeks/main/data/usa_county_wise.csv')
 
-```{r}
-
-#Looking into the vaccination dataset
-
-data <- read_csv('data/country_vaccinations_by_manufacturer.csv')
 
 
 ```
 
-```{}
-```
+## Bubble Maps
 
-```{r, warning=FALSE, message=FALSE}
-library(shiny)
-library(leaflet)
-library(ggplot2)
+```{r, warning = FALSE, message = FALSE}
+usa <- usa_county_wise
+
+usa <- na.omit(usa)
+
+usa <- usa |> filter(Confirmed > 10000 & Long_ != 0)
+
+usa <- usa |> rename(long = Long_)
+
+head(usa)
+
+library(sf) 
 library(maps)
 
+#Get map data
 
-# Load world map data for leaflet
-world <- map_data("world")
+us_map <- map_data("state")
 
-ui <- fluidPage(
-    titlePanel("Vaccination Data by Manufacturer"),
-    sidebarLayout(
-        sidebarPanel(
-            selectInput("country", "Select Country", choices = unique(data$location))
-        ),
-        mainPanel(
-            leafletOutput("map"),
-            plotOutput("vaccination_plot")
-        )
-    )
-)
+#Filter map data to New York
 
-server <- function(input, output, session) {
-    
-    # Render Leaflet map
-    output$map <- renderLeaflet({
-        leaflet(data = world) %>%
-            addProviderTiles("CartoDB.Positron") %>%
-            setView(lng = 0, lat = 30, zoom = 2) %>%
-            addPolygons(fillColor = "lightblue", weight = 1, smoothFactor = 0.5, fillOpacity = 0.8)
-    })
-    
-    # Update map and plot based on selected country
-    observeEvent(input$country, {
-        selected_country_data <- data[data$location == input$country, ]
-        
-        # Update plot
-        output$vaccination_plot <- renderPlot({
-            ggplot(selected_country_data, aes(x = date, y = total_vaccinations, fill = vaccine)) +
-                geom_col(stat = "identity") +
-                labs(title = paste("Vaccination Progress in", input$country),
-                     x = "Date",
-                     y = "Total Vaccinations",
-                     fill = "Vaccine") +
-                theme_minimal()
-        })
-    })
-}
+ny_map <- subset(us_map, region == "usa")
 
-shinyApp(ui = ui, server = server)
+#Plot the map
 
+p <- ggplot(usa, aes(x = long, y = Lat)) + geom_polygon(data = us_map, aes(x = long, y = lat, group = group), color = "black", fill = "#ebf5ee")+ geom_point(aes(color = Confirmed, size = usa$Confirmed)) + scale_color_gradient(low = "#7bbd8c", high = "#021c09", name = "Confirmed Cases")+ labs(x = "Longitude", y = "Latitude", title = "Lat/Long Coordinates")
 
+#Add the US map as a background layer
+
+p
 ```

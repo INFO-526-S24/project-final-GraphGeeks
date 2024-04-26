@@ -148,16 +148,24 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 ### Plan of Action
 
-| Task Name                       | Status     | Assignee                                          | Due         | Priority | Summary                                             |
-|----------|----------|----------|----------|----------|----------------------|
-| Data Collection                 | completed  | Rajitha Reddy, Omid Zandi, Devendran              | 06 Apr 2024 | Moderate | Collection of necessary data                        |
-| Data Exploration                | completed  | Devendran Vemula, Gowtham GopalaKrishnan          | 06 Apr 2024 | Moderate | Cleaning, transformation, integration of data       |
-| Q1 Time Series Plot             | Incomplete | Everyone                                          | 07 Apr 2024 | Moderate | Create mandatory time series plots for the question |
-| Q1 Scatter Plot                 | completed  | Devendran Vemula, G Sai Laasya, Rajitha Reddy     | 07 Apr 2024 | Moderate | Generate a scatter plot                             |
-| Q2 Identify Trends and Patterns | completed  | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 07 Apr 2024 | Moderate | Analyze the trends and patterns                     |
-| Q2 Anomaly Detection            | completed  | G Sai Laasya, Mrunali Yadav                       | 09 Apr 2024 | Moderate | Detect anomalies in the spread of the pandemic      |
-| Q2 Choropleth Map & Bubble Maps | completed  | Omid, Rajitha                                     | 09 Apr 2024 | Moderate | Create choropleth and bubble maps                   |
-| Q2 Spatial Map                  | completed  | Everyone                                          | 10 Apr 2024 | Moderate | Develop a spatial map                               |
-| Presentation & Write-Up         | completed  | Everyone                                          | 15 Apr 2024 | Moderate | Prepare the presentation and write-up               |
+| Task Name | Status | Assignee | Due | Priority | Summary | 
+| ----------| -------|----------|-----|----------|---------|
+| Proposal Description | Completed | Rajitha Reddy, Omid Zandi | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
+| Dataset | Completed | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
+| Questions | Completed | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
+| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate| The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.|
+| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
+|TimeLine and Work Flow | Completed | G Sai Laasya Mrunali Yadav| 03 Apr 2024 | Moderate | The work flow of the project |
+|Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
+| Working on the Bubble Map | Completed | G Sai Laasya, Rajitha Reddy | 06 Apr 2024 | Moderate | Making a bubble map on the COVID dataset|
+| Spatial Map | Completed | Omid Zandi | 10 Apr 2024 | Moderate | Creating the spatial maps for the number of cases |
+| Time Lapse Visualization | Completed | Devendran Vemula | 12 Apr 2024 | Moderate | The progress on the COVID cases or Vaccination |
+| Working on the Index.qmd file | Incomplete |  G Sai Laasya, Rajitha Reddy, Mrunali Yadav | 15 Apr 2024 | High |Writing the analysis, summary part |
+| Adding aesthethics to ShinyApp | Incomplete |Devendran Vemula, Omid Zandi | 17 Apr 2024 | Moderate | Adding the aesthethics |
+| Presnetation | Incomplete |  Devendran Vemula, Gowtham GopalaKrishnan | 20 Apr 2024 | High | Creating the presentation |
+::: {.column width="50%"}
+![](images/Timeli.jpg)
+:::
+:::
 
 ![](images/Timeli.jpg){fig-align="center" width="500"}
