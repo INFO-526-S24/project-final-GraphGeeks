@@ -1,6 +1,8 @@
+# nolint start
+
 # Load necessary libraries
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata)
+pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata, ggiraph, maps)
 
 # Set global options and themes
 theme_set(theme_minimal(base_size = 14))
@@ -32,11 +34,12 @@ vaccination_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv") 
     summarize(
         Total_Vaccinations = max(total_vaccinations, na.rm = TRUE),
         date = date[which.max(total_vaccinations)],
+        vaccine = vaccine,
         .groups = "drop"
     ) %>%
     arrange(desc(Total_Vaccinations))
 
-print(vaccination_data)
+world <- map_data("world")
 
 
 # Define UI
@@ -91,6 +94,7 @@ ui <- fluidPage(
             "Vaccination",
             sidebarLayout(
                 sidebarPanel(
+                    uiOutput("vaccineInput"),
                     dateRangeInput("vaccineDateRange", "Select Date Range for Vaccination Data:",
                         start = as.Date("2020-12-29"),
                         end = as.Date("2022-03-29"),
@@ -99,7 +103,14 @@ ui <- fluidPage(
                     )
                 ),
                 mainPanel(
-                    plotOutput("vaccinePlot")
+                    tabsetPanel(
+                        id = "vaccinationtabs",
+                        tabPanel("Top vaccinated country", plotOutput("vaccinePlot")),
+                        tabPanel(
+                            "Manufacturer", leafletOutput("map"),
+                            plotOutput("vaccination_plot")
+                        )
+                    )
                 )
             )
         )
@@ -115,6 +126,15 @@ server <- function(input, output, session) {
             selectInput("county", "Select County:", choices = unique(us_confirmed$`Province/State`))
         }
     })
+
+    output$vaccineInput <- renderUI({
+        if (input$vaccinationtabs == "Manufacturer") {
+            selectInput("country", "Select Country", choices = unique(vaccination_data$location))
+        } else {
+         
+        }
+    })
+
 
     filtered_data <- reactive({
         if (!is.null(input$country) && !is.null(input$dateRange)) {
@@ -241,14 +261,16 @@ server <- function(input, output, session) {
 
     # Map logic for displaying data
     output$mapPlot <- renderLeaflet({
-        req(input$mapDateRange)  # Ensure date range is selected
+        req(input$mapDateRange) # Ensure date range is selected
 
         # Filter data for the selected date range and case type
         selected_data <- global_data %>%
-            filter(Date >= input$mapDateRange[1], Date <= input$mapDateRange[2], 
-                   Case_Type == input$caseType) %>%
+            filter(
+                Date >= input$mapDateRange[1], Date <= input$mapDateRange[2],
+                Case_Type == input$caseType
+            ) %>%
             group_by(Country) %>%
-            summarize(Cases = sum(Cases), .groups = "drop")  # Sum cases over the period for each country
+            summarize(Cases = sum(Cases), .groups = "drop") # Sum cases over the period for each country
 
         # Prepare world map data
         world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -257,17 +279,17 @@ server <- function(input, output, session) {
         world_data <- left_join(world, selected_data, by = c("name" = "Country"))
 
         # Create the map only if there are cases to display
-        if(any(!is.na(world_data$Cases))) {
+        if (any(!is.na(world_data$Cases))) {
             pal <- colorBin("YlOrRd", domain = world_data$Cases, bins = 10, na.color = "#808080")
 
             leaflet(world_data) %>%
                 addProviderTiles(providers$CartoDB.Positron) %>%
                 addPolygons(
-                    fillColor = ~pal(Cases),
+                    fillColor = ~ pal(Cases),
                     fillOpacity = 0.7,
                     color = "#BDBDC3",
                     weight = 0.5,
-                    popup = ~paste(name, "<br>", "Cases: ", Cases)
+                    popup = ~ paste(name, "<br>", "Cases: ", Cases)
                 ) %>%
                 addLegend(
                     "bottomright",
@@ -285,49 +307,73 @@ server <- function(input, output, session) {
     })
 
     # Vaccination tab logic
-    # Vaccination tab logic
-output$vaccinePlot <- renderPlot({
-    req(input$vaccineDateRange)  # Ensure date range is selected
+    output$vaccinePlot <- renderPlot({
+        req(input$vaccineDateRange) # Ensure date range is selected
 
-
-
-
-    # Print to console for debugging
-    print(str(vaccination_data$date))
-    print(input$vaccineDateRange)
-
-
-
-
-    # Filter vaccination data within the selected date range
-
-
+        # Filter vaccination data within the selected date range
         vaccine_data_filtered <- vaccination_data %>%
-        filter(date >= input$vaccineDateRange[1], date <= input$vaccineDateRange[2]) %>%
-        group_by(location) %>%
-        summarize(Total_Vaccinations = max(total_vaccinations, na.rm = TRUE), .groups = "drop") %>%
-        arrange(desc(Total_Vaccinations)) %>%
-        slice_max(order_by = Total_Vaccinations, n = 10)  
+            filter(date >= input$vaccineDateRange[1], date <= input$vaccineDateRange[2]) %>%
+            group_by(location) %>%
+            summarize(Total_Vaccinations = max(Total_Vaccinations, na.rm = TRUE), .groups = "drop") %>%
+            arrange(desc(Total_Vaccinations)) %>%
+            slice_max(order_by = Total_Vaccinations, n = 10)
+
+        # Join with global data to get cases for these top 10 vaccinated countries within the date range
+        global_data_filtered <- global_data %>%
+            filter(Country %in% vaccine_data_filtered$location & Date >= input$vaccineDateRange[1] & Date <= input$vaccineDateRange[2]) %>%
+            group_by(Country, Case_Type) %>%
+            summarize(Total_Cases = sum(Cases, na.rm = TRUE), .groups = "drop")
+
+        # Create a ggplot object and make it interactive
+        p <- ggplot(global_data_filtered, aes(x = Country, y = Total_Cases, fill = Case_Type)) +
+            geom_bar(stat = "identity", position = "dodge") +
+            theme_minimal() +
+            labs(
+                title = "COVID-19 Case Types in Top 10 Vaccinated Countries",
+                x = "Country", y = "Total Cases",
+                fill = "Case Type"
+            )
+        p
+    })
 
 
+    output$map <- renderLeaflet({
 
-    # Join with global data to get cases for these top 10 vaccinated countries within the date range
-    global_data_filtered <- global_data %>%
-        filter(Country %in% vaccine_data_filtered$location & Date >= input$vaccineDateRange[1] & Date <= input$vaccineDateRange[2]) %>%
-        group_by(Country, Case_Type) %>%
-        summarize(Total_Cases = sum(Cases, na.rm = TRUE), .groups = "drop")
+  # Load world map as an sf object
+    world_sf <- ne_countries(scale = "medium", returnclass = "sf")
 
-    # Create a bar plot to show cases for the top 10 vaccinated countries
-    ggplot(global_data_filtered, aes(x = Country, y = Total_Cases, fill = Case_Type)) +
-        geom_bar(stat = "identity", position = "dodge") +
-        theme_minimal() +
-        labs(title = "COVID-19 Case Types in Top 10 Vaccinated Countries",
-             x = "Country", y = "Total Cases",
-             fill = "Case Type")
-})
+    leaflet(world_sf) %>%
+        addProviderTiles("CartoDB.Positron") %>%
+        setView(lng = 0, lat = 30, zoom = 2) %>%
+        addPolygons(
+            fillColor = "lightblue",
+            color = "#BDBDC3",
+            weight = 0.5,
+            fillOpacity = 0.8
+        )
 
+     })
 
+    # Update map and plot based on selected country
+    observeEvent(input$country, {
+        selected_country_data <- vaccination_data[vaccination_data$location == input$country, ]
+
+        # Update plot
+        output$vaccination_plot <- renderPlot({
+            ggplot(selected_country_data, aes(x = vaccination_data, y = Total_Vaccinations, fill = vaccine)) +
+                geom_col(stat = "identity") +
+                labs(
+                    title = paste("Vaccination Progress in", input$country),
+                    x = "Date",
+                    y = "Total Vaccinations",
+                    fill = "Vaccine"
+                ) +
+                theme_minimal()
+        })
+    })
 }
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
+# nolint end
