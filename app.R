@@ -337,9 +337,8 @@ server <- function(input, output, session) {
     })
 
 
-    output$map <- renderLeaflet({
-
-  # Load world map as an sf object
+   output$map <- renderLeaflet({
+    # Load world map as an sf object
     world_sf <- ne_countries(scale = "medium", returnclass = "sf")
 
     leaflet(world_sf) %>%
@@ -351,26 +350,33 @@ server <- function(input, output, session) {
             weight = 0.5,
             fillOpacity = 0.8
         )
+})
 
-     })
+# Update map and plot based on selected country
+observeEvent(input$country, {
+    selected_country_data <- vaccination_data[vaccination_data$location == input$country, ]
 
-    # Update map and plot based on selected country
-    observeEvent(input$country, {
-        selected_country_data <- vaccination_data[vaccination_data$location == input$country, ]
-
-        # Update plot
+    # Ensure there is data to plot
+    if(nrow(selected_country_data) > 0) {
         output$vaccination_plot <- renderPlot({
-            ggplot(selected_country_data, aes(x = vaccination_data, y = Total_Vaccinations, fill = vaccine)) +
-                geom_col(stat = "identity") +
+            ggplot(selected_country_data, aes(x = date, y = total_vaccinations, fill = vaccine)) +
+                geom_col() +
                 labs(
                     title = paste("Vaccination Progress in", input$country),
                     x = "Date",
                     y = "Total Vaccinations",
-                    fill = "Vaccine"
+                    fill = "Vaccine Type"
                 ) +
                 theme_minimal()
         })
-    })
+    } else {
+        output$vaccination_plot <- renderPlot({
+            plot.new()
+            text(0.5, 0.5, "No data available", cex = 1.5)
+        })
+    }
+})
+
 }
 
 # Run the application
