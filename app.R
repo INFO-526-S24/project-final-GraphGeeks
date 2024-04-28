@@ -2,7 +2,7 @@
 
 # Load necessary libraries
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata, ggiraph, maps, sf)
+pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata, ggiraph, maps, sf, plotly)
 
 # Set global options and themes
 theme_set(theme_minimal(base_size = 14))
@@ -109,7 +109,7 @@ ui <- fluidPage(
                 mainPanel(
                     tabsetPanel(
                         id = "vaccinationtabs",
-                        tabPanel("Top vaccinated country", plotOutput("vaccinePlot")),
+                        tabPanel("Top vaccinated country", plotlyOutput("vaccinePlot")),
                         tabPanel(
                             "Manufacturer", leafletOutput("map"),
                             plotOutput("manufacturer_plot")
@@ -311,7 +311,7 @@ server <- function(input, output, session) {
     })
 
     # Vaccination tab logic
-    output$vaccinePlot <- renderPlot({
+    output$vaccinePlot <- renderPlotly({
         req(input$vaccineDateRange) # Ensure date range is selected
 
         # Filter vaccination data within the selected date range
@@ -337,6 +337,8 @@ server <- function(input, output, session) {
                 x = "Country", y = "Total Cases",
                 fill = "Case Type"
             )
+        p <- ggplotly(p, tooltip = "y")
+        
         p
     })
 
@@ -347,6 +349,7 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 # nolint end
+
 
 # Define UI
 ui <- fluidPage(
@@ -400,3 +403,5 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
+
