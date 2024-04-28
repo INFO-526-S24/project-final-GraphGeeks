@@ -28,7 +28,8 @@ us_deaths <- read_csv(here('data', 'us_deaths.csv')) %>%
 
 us_ <- us_deaths %>%
   inner_join(us_confirmed, by = c("County", "Date", "State")) %>%
-  select(Date, County, State, Confirmed, Death)
+  select(Date, County, State, Confirmed, Death) %>% 
+  rename(Deaths = Death)
 
 # us <- read_csv(here('data', 'us_simplified.csv')) %>%
 #   rename(County = Admin2, State = `Province/State`) %>%
@@ -108,7 +109,7 @@ data <- data %>%
 # US preprocessing -------------------------------------------------------------
 
 # Calculate the total cumulative cases and deaths for each state on each day, converting them to daily by taking the difference from the previous day
-us_state_daily_cumulate <- us %>%
+us_state_daily_cumulate <- us_ %>%
   group_by(Date, State) %>%
   summarize(
     Confirmed = sum(Confirmed, na.rm = TRUE),
