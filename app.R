@@ -2,7 +2,7 @@
 
 # Load necessary libraries
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata, ggiraph, maps)
+pacman::p_load(tidyverse, shiny, shinythemes, readr, leaflet, rnaturalearth, rnaturalearthdata, ggiraph, maps, sf)
 
 # Set global options and themes
 theme_set(theme_minimal(base_size = 14))
@@ -38,6 +38,10 @@ vaccination_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv") 
         .groups = "drop"
     ) %>%
     arrange(desc(Total_Vaccinations))
+
+
+
+df <- read_csv('./data/country_vaccinations_by_manufacturer.csv')
 
 world <- map_data("world")
 
@@ -108,7 +112,7 @@ ui <- fluidPage(
                         tabPanel("Top vaccinated country", plotOutput("vaccinePlot")),
                         tabPanel(
                             "Manufacturer", leafletOutput("map"),
-                            plotOutput("vaccination_plot")
+                            plotOutput("manufacturer_plot")
                         )
                     )
                 )
@@ -337,49 +341,62 @@ server <- function(input, output, session) {
     })
 
 
-   output$map <- renderLeaflet({
-    # Load world map as an sf object
-    world_sf <- ne_countries(scale = "medium", returnclass = "sf")
-
-    leaflet(world_sf) %>%
-        addProviderTiles("CartoDB.Positron") %>%
-        setView(lng = 0, lat = 30, zoom = 2) %>%
-        addPolygons(
-            fillColor = "lightblue",
-            color = "#BDBDC3",
-            weight = 0.5,
-            fillOpacity = 0.8
-        )
-})
-
-# Update map and plot based on selected country
-observeEvent(input$country, {
-    selected_country_data <- vaccination_data[vaccination_data$location == input$country, ]
-
-    # Ensure there is data to plot
-    if(nrow(selected_country_data) > 0) {
-        output$vaccination_plot <- renderPlot({
-            ggplot(selected_country_data, aes(x = date, y = total_vaccinations, fill = vaccine)) +
-                geom_col() +
-                labs(
-                    title = paste("Vaccination Progress in", input$country),
-                    x = "Date",
-                    y = "Total Vaccinations",
-                    fill = "Vaccine Type"
-                ) +
-                theme_minimal()
-        })
-    } else {
-        output$vaccination_plot <- renderPlot({
-            plot.new()
-            text(0.5, 0.5, "No data available", cex = 1.5)
-        })
-    }
-})
-
 }
 
 # Run the application
 shinyApp(ui = ui, server = server)
 
 # nolint end
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Total Vaccinations Over Time"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("country", "Choose a country:",
+                  choices = unique(df$location)),
+      selectInput("vaccine", "Choose a vaccine:",
+                  choices = unique(df$vaccine)),
+      radioButtons("plot_type", "Plot type:",
+                   choices = c("Line" = "line",
+                               "Scatter" = "scatter",
+                               "Both" = "both"),
+                   selected = "both"),
+      # Sidebar content, if needed
+    ),
+    mainPanel(
+      plotOutput("vaccination_plot")
+    )
+  )
+)
+
+# Define server logic
+server <- function(input, output) {
+  # Assuming your dataframe is named df
+  # Convert the 'date' column to a Date object
+  df$date <- as.Date(df$date)
+  
+  # Filter data based on selected country and vaccine
+  selected_data <- reactive({
+    df[df$location == input$country & df$vaccine == input$vaccine, ]
+  })
+  
+  # Render plot
+  output$vaccination_plot <- renderPlot({
+    plot_type <- switch(input$plot_type,
+                        "line" = geom_line(),
+                        "scatter" = geom_point(),
+                        "both" = list(geom_line(), geom_point()))
+    
+    ggplot(selected_data(), aes(x = date, y = total_vaccinations, color = location)) +
+      plot_type +
+      labs(title = paste("Total Vaccinations Over Time in", input$country, "for", input$vaccine),
+           x = "Date",
+           y = "Total Vaccinations",
+           color = "Country") +
+      theme_minimal()
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
