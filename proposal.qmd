@@ -35,8 +35,6 @@ Our project leverages a comprehensive COVID-19 dataset from Kaggle to unlock ins
 #| label: load-dataset
 #| message: false
 
-
-
 # Dataset Head
 us_confirmed <- read_csv("./data/us_confirmed.csv")
 print(head(us_confirmed))
@@ -44,19 +42,11 @@ print(head(us_confirmed))
 us_deaths <- read_csv("./data/us_deaths.csv")
 print(head(us_deaths))
 
-vaccination_data <- read_csv("./data/country_vaccinations.csv")
-print(head(vaccination_data))
-
-
-countries_agg <- read_csv("./data/countries-aggregated.csv")
-head(countries_agg)
-
 populations <- read_csv('./data/populations.csv')
 head(populations)
 
 country_vaccinations_manufacture <-  read_csv('./data/country_vaccinations_by_manufacturer.csv')
 head(country_vaccinations_manufacture)
-
 
 countries <- read_csv('./data/countries.csv')
 head(countries)
@@ -75,7 +65,7 @@ head(countries)
 [**COVID-19 Dataset Source Link**](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv) And [**vaccination Dataset Source Link**](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)
 
 | Variable                            | Description                                                                                             |
-|----------------------|-------------------------------------------------|
+|-----------------------|-------------------------------------------------|
 | Date                                | Date of the record, crucial for any time-series analysis.                                               |
 | Country/Region                      | Name of the country or region, essential for geographic comparisons.                                    |
 | Confirmed                           | Total confirmed COVID-19 cases, a primary metric for pandemic assessment.                               |
@@ -148,24 +138,26 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 
 ### Plan of Action
 
-| Task Name | Status | Assignee | Due | Priority | Summary | 
-| ----------| -------|----------|-----|----------|---------|
-| Proposal Description | Completed | Rajitha Reddy, Omid Zandi | 03 Apr 2024 | Moderate |  Concise summary outlining the main idea of a proposal |
-| Dataset | Completed | Devendran Vemula , Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset |
-| Questions | Completed | Everyone | 03 Apr 2024 | Moderate |  Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights |
-| Analysis for Question 1 | Completed | Devendran Vemula , G Sai Laasya  ,  Rajitha Reddy | 03 Apr 2024 | Moderate| The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.|
-| Analysis for Question 2 | Completed |  Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate|  The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
-|TimeLine and Work Flow | Completed | G Sai Laasya Mrunali Yadav| 03 Apr 2024 | Moderate | The work flow of the project |
-|Proposal Peer Review | Completed | Everyone | 03 Apr 2024 | Moderate | Reviewing Other Teams |
-| Working on the Bubble Map | Completed | G Sai Laasya, Rajitha Reddy | 06 Apr 2024 | Moderate | Making a bubble map on the COVID dataset|
-| Spatial Map | Completed | Omid Zandi | 10 Apr 2024 | Moderate | Creating the spatial maps for the number of cases |
-| Time Lapse Visualization | Completed | Devendran Vemula | 12 Apr 2024 | Moderate | The progress on the COVID cases or Vaccination |
-| Working on the Index.qmd file | Incomplete |  G Sai Laasya, Rajitha Reddy, Mrunali Yadav | 15 Apr 2024 | High |Writing the analysis, summary part |
-| Adding aesthethics to ShinyApp | Incomplete |Devendran Vemula, Omid Zandi | 17 Apr 2024 | Moderate | Adding the aesthethics |
-| Presnetation | Incomplete |  Devendran Vemula, Gowtham GopalaKrishnan | 20 Apr 2024 | High | Creating the presentation |
+| Task Name                      | Status     | Assignee                                          | Due         | Priority | Summary                                                                                                                                                                                                |
+|------------|------------|------------|------------|------------|------------|
+| Proposal Description           | Completed  | Rajitha Reddy, Omid Zandi                         | 03 Apr 2024 | Moderate | Concise summary outlining the main idea of a proposal                                                                                                                                                  |
+| Dataset                        | Completed  | Devendran Vemula , Gowtham GopalaKrishnan         | 03 Apr 2024 | Moderate | Uploading and Loading the Dataset                                                                                                                                                                      |
+| Questions                      | Completed  | Everyone                                          | 03 Apr 2024 | Moderate | Team consolidates findings to generate comprehensive questions aimed at exploring deeper insights                                                                                                      |
+| Analysis for Question 1        | Completed  | Devendran Vemula , G Sai Laasya , Rajitha Reddy   | 03 Apr 2024 | Moderate | The team works together to analyze the data, combining their skills and viewpoints to gain a thorough understanding of the information.                                                                |
+| Analysis for Question 2        | Completed  | Mrunali Yadav, Omid Zandi, Gowtham GopalaKrishnan | 03 Apr 2024 | Moderate | The team conducts analysis for the project through a collaborative approach, utilizing various analytical methods, tools, and expertise to thoroughly examine the data and derive meaningful insights. |
+| TimeLine and Work Flow         | Completed  | G Sai Laasya Mrunali Yadav                        | 03 Apr 2024 | Moderate | The work flow of the project                                                                                                                                                                           |
+| Proposal Peer Review           | Completed  | Everyone                                          | 03 Apr 2024 | Moderate | Reviewing Other Teams                                                                                                                                                                                  |
+| Working on the Bubble Map      | Completed  | G Sai Laasya, Rajitha Reddy                       | 06 Apr 2024 | Moderate | Making a bubble map on the COVID dataset                                                                                                                                                               |
+| Spatial Map                    | Completed  | Omid Zandi                                        | 10 Apr 2024 | Moderate | Creating the spatial maps for the number of cases                                                                                                                                                      |
+| Time Lapse Visualization       | Completed  | Devendran Vemula                                  | 12 Apr 2024 | Moderate | The progress on the COVID cases or Vaccination                                                                                                                                                         |
+| Working on the Index.qmd file  | Incomplete | G Sai Laasya, Rajitha Reddy, Mrunali Yadav        | 15 Apr 2024 | High     | Writing the analysis, summary part                                                                                                                                                                     |
+| Adding aesthethics to ShinyApp | Incomplete | Devendran Vemula, Omid Zandi                      | 17 Apr 2024 | Moderate | Adding the aesthethics                                                                                                                                                                                 |
+| Presnetation                   | Incomplete | Devendran Vemula, Gowtham GopalaKrishnan          | 20 Apr 2024 | High     | Creating the presentation                                                                                                                                                                              |
+
 ::: {.column width="50%"}
 ![](images/Timeli.jpg)
 :::
+
 :::
 
 ![](images/Timeli.jpg){fig-align="center" width="500"}
