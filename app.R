@@ -4,7 +4,7 @@ if (!require("pacman")) {
     install.packages("pacman")
 }
 
-pacman::p_load(tidyverse, here, tidyverse, dplyr, colorspace, shiny, shinythemes, rnaturalearth, rnaturalearthdata, BiocManager, readr, leaflet, ggiraph, RColorBrewer, sf, zoo, shinyWidgets, plotly)
+pacman::p_load(ggplot2, dplyr, colorspace,tidyr, shiny, shinythemes, rnaturalearth, rnaturalearthdata, BiocManager, readr, leaflet, ggiraph, RColorBrewer, sf, zoo, shinyWidgets, plotly)
 
 # set theme for ggplot2
 ggplot2::theme_set(ggplot2::theme_minimal(base_size = 14))
@@ -22,11 +22,14 @@ knitr::opts_chunk$set(
 )
 
 # Importing the datasets
-data <- read_csv(here("data", "countries.csv"))
-pops <- read_csv(here("data", "populations.csv"))
-us_confirmed <- read_csv(here("data", "us_confirmed.csv")) %>%
+data <- read_csv("./data/countries.csv")
+
+pops <- read_csv("./data/populations.csv")
+
+us_confirmed <- read_csv("./data/us_confirmed.csv") %>%
     rename(Confirmed = Case, County = Admin2, State = `Province/State`)
-us_deaths <- read_csv(here("data", "us_deaths.csv")) %>%
+
+us_deaths <- read_csv("./data/us_deaths.csv") %>%
     rename(Death = Case, County = Admin2, State = `Province/State`)
 
 us_ <- us_deaths %>%
@@ -169,9 +172,11 @@ vaccination_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv") 
     ) %>%
     arrange(desc(Total_Vaccinations))
 
+# without preprossed data
 manufacture_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv")
 
 
+# propessed global data
 global_data <- read_csv("./data/countries.csv") %>%
     mutate(Date = as.Date(Date)) %>%
     pivot_longer(
@@ -186,6 +191,8 @@ global_data <- read_csv("./data/countries.csv") %>%
 ui <- fluidPage(
     theme = shinytheme("united"),
     tags$head(
+
+        # Custom CSS  
         tags$style(HTML("
                
             .navbar {
@@ -223,12 +230,14 @@ ui <- fluidPage(
         src = "https://img.freepik.com/free-vector/3d-virus-bacteria-infection-banner-with-text-space_1017-24372.jpg?w=1380&t=st=1714364581~exp=1714365181~hmac=7c887513452dbf7f262c3697db5058d26004d19c04e730a3af65be4ed6c04071"
     ),
 
-
+# Navabar
     navbarPage(
         theme = "cerulean",
         "COVID-19 Data Analysis",
+        # 1st tabpanel
         tabPanel(
             "Time Series",
+            # subtabs
             tabsetPanel(
                 tabPanel(
                     "Global Timeseries",
@@ -501,14 +510,13 @@ server <- function(input, output) {
         world <- ne_countries(scale = "medium", returnclass = "sf")
         world_data <- merge(world, date_data, by.x = "name", by.y = "Country", all.x = TRUE)
 
-        # Get the selected case type dynamically
+        # Getting selected case type dynamically
         selected_case_type <- input$case_type
 
-        # Define a color palette based on the selected case type data
         num_colors <- 10
         pal <- colorBin("YlOrRd", domain = world_data[[selected_case_type]], bins = num_colors, na.color = "#808080")
 
-        # Create the interactive map
+        # creating maps
         map <- leaflet(world_data) %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(lng = 0, lat = 20, zoom = 1.5) %>%
@@ -537,14 +545,12 @@ server <- function(input, output) {
         world <- ne_countries(scale = "medium", returnclass = "sf")
         world_data <- merge(world, date_data, by.x = "name", by.y = "Country", all.x = TRUE)
 
-        # Get the selected case type dynamically
         selected_case_type <- input$normalized_case_type
 
         # Define a color palette
         num_colors <- 10
         pal <- colorBin("YlOrRd", domain = world_data[[selected_case_type]], bins = num_colors, na.color = "#808080")
 
-        # Create the interactive map
         map <- leaflet(world_data) %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(lng = 0, lat = 20, zoom = 1.5) %>%
@@ -565,20 +571,21 @@ server <- function(input, output) {
     })
 
     output$vaccinePlot <- renderPlotly({
-        req(input$vaccineDateRange) # Ensure date range is selected
-        # Filter vaccination data within the selected date range
+        # checking whether data is having or not
+        req(input$vaccineDateRange)
+        # Filtering vaccination data within the selected date range
         vaccine_data_filtered <- vaccination_data %>%
             filter(date >= input$vaccineDateRange[1], date <= input$vaccineDateRange[2]) %>%
             group_by(location) %>%
             summarize(Total_Vaccinations = max(Total_Vaccinations, na.rm = TRUE), .groups = "drop") %>%
             arrange(desc(Total_Vaccinations)) %>%
             slice_max(order_by = Total_Vaccinations, n = 10)
-        # Join with global data to get cases for these top 10 vaccinated countries within the date range
+
         global_data_filtered <- global_data %>%
             filter(Country %in% vaccine_data_filtered$location & Date >= input$vaccineDateRange[1] & Date <= input$vaccineDateRange[2]) %>%
             group_by(Country, Case_Type) %>%
             summarize(Total_Cases = sum(Cases, na.rm = TRUE), .groups = "drop")
-        # Create a ggplot object and make it interactive
+
         p <- ggplot(global_data_filtered, aes(x = Country, y = Total_Cases, fill = Case_Type)) +
             geom_bar(stat = "identity", position = "stack") +
             theme_minimal() +
@@ -594,10 +601,7 @@ server <- function(input, output) {
 
 
     # manufacture
-    # Assuming your dataframe is named df
-    # Convert the 'date' column to a Date object
     manufacture_data$date <- as.Date(manufacture_data$date)
-    # Filter data based on selected country and vaccine
     selected_data <- reactive({
         manufacture_data[manufacture_data$location == input$country & manufacture_data$vaccine == input$vaccine, ]
     })
@@ -623,7 +627,7 @@ server <- function(input, output) {
     })
 }
 
-# Create Shiny app ----
+# Creating shiny app
 shinyApp(ui = ui, server = server)
 
 # nolint end
