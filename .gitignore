@@ -1,7 +1,12 @@
+rsconnect
+
+app.R
+
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 
+
 /.quarto/
-.rsconnect
+
