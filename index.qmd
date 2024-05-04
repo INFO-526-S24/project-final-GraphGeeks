@@ -1,8 +1,8 @@
 ---
-title: "Project Title"
+title: "Tracing the COVID-19 Trajectory Using **Shiny**"
 subtitle: "INFO 526 - Project Final"
 author: 
-  - name: "Team name - Team member 1, Team member 2,..."
+  - name: "Devendran Vemula<br> Omid Zandi<br> Gorantla Sai Laasya<br> Rajitha Reddy Tiruthani<br> Gowtham GopalaKrishnan <br> Mrunali Yadav <br>"
     affiliations:
       - name: "School of Information, University of Arizona"
 description: "Project description"
