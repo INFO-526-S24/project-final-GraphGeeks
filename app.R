@@ -27,10 +27,10 @@ data <- read_csv("./data/countries.csv")
 pops <- read_csv("./data/populations.csv")
 
 us_confirmed <- read_csv("./data/us_confirmed.csv") %>%
-    rename(Confirmed = Case, County = Admin2, State = Province/State)
+    rename(Confirmed = Case, County = Admin2, State = `Province/State`)
 
 us_deaths <- read_csv("./data/us_deaths.csv") %>%
-    rename(Death = Case, County = Admin2, State = Province/State)
+    rename(Death = Case, County = Admin2, State = `Province/State`)
 
 us_ <- us_deaths %>%
     inner_join(us_confirmed, by = c("County", "Date", "State")) %>%

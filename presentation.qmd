@@ -1,15 +1,17 @@
 ---
-title: "Project title"
-subtitle: "INFO 526 - Fall 2023 - Project Final"
-author: "Author names"
+title: "Tracing the COVID-19 Trajectory Using **Shiny**"
+subtitle: "INFO 526 - Spring 2024 - Project Final"
+author: "Devendran Vemula<br> Omid Zandi<br> Gorantla Sai Laasya<br> Rajitha Reddy Tiruthani<br> Gowtham GopalaKrishnan <br> Mrunali Yadav <br>"
 title-slide-attributes:
-  data-background-image: images/watercolour_sys02_img34_teacup-ocean.jpg
+  data-background-image: images/covid_2.webp
   data-background-size: stretch
-  data-background-opacity: "0.7"
+  data-background-opacity: "0.8"
   data-slide-number: none
 format:
   revealjs:
+    transition: convex
     theme:  ['data/customtheming.scss']
+    auto-animate-duration: 1.5
   
 editor: visual
 execute:
@@ -52,11 +54,24 @@ mtcars$speed <- mtcars$hp / mtcars$wt
 data("penguins")
 ```
 
-# Using Quarto for presentations
+## Introduction
 
-## Quarto
+-   Comprehensive analysis of COVID-19 data from Kaggle, focusing on case counts, recovery rates, mortality, and vaccination data.
 
--   The presentation is created using the Quarto CLI
+-   Utilizing Shiny app package for interactive and user-friendly data visualization.
 
--   `##` sets the start of a new slide
+-   Providing actionable insights for policymakers and the public.
 
+-   Clear communication of complex data to aid in understanding and response to the global health crisis.
+
+## Dataset
+
+-   Datasets sourced from Kaggle, curated by "imdevskp," offer global, country-wise, and detailed COVID-19 statistics, including day-wise global data, country-wise snapshots, and granular USA county-level breakdowns.
+
+-   Critical metrics such as case counts, deaths, recoveries, and vaccinations are covered, facilitating comprehensive analysis of pandemic trends and impacts.
+
+## Questions
+
+-   How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
+
+-   What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
