@@ -74,34 +74,52 @@ data("penguins")
 
 ## Question -1
 
+. . .
+
 -   How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
 
-## Time Series of Country's COVID-19 
+## Time Series of Country's COVID-19
+
+. . .
 
 ![](images/clipboard-3950227123.png)
 
-##  Time Series of US's COVID- 19
+## Time Series of US's COVID- 19
+
+. . .
 
 ![](images/clipboard-1312047739.png)
 
-## Question -2 
+## Question -2
+
+. . .
 
 What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
 
 ## Spatial Distribution for Cases
 
+. . .
+
 ![](images/clipboard-1751926279.png)
 
-## Normalized Spatial Distribution 
+## Normalized Spatial Distribution
+
+. . .
 
 ![](images/clipboard-3291235951.png)
 
 ## Top - 10 Vaccinated Countries
 
+. . .
+
 ![](images/clipboard-2859841875.png)
 
 ## Time Series Vaccine Data by Manufacturer
 
+. . .
+
 ![](images/clipboard-1209656722.png)
 
-##                          ![](images/clipboard-2307034799.png){width="500"}
+## *Thank You for your time and attention during the presentation!*
+
+![](images/vaccine.gif){fig-align="center" width="420"}
