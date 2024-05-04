@@ -27,10 +27,10 @@ data <- read_csv("./data/countries.csv")
 pops <- read_csv("./data/populations.csv")
 
 us_confirmed <- read_csv("./data/us_confirmed.csv") %>%
-    rename(Confirmed = Case, County = Admin2, State = Province/State)
+    rename(Confirmed = Case, County = Admin2, State = `Province/State`)
 
 us_deaths <- read_csv("./data/us_deaths.csv") %>%
-    rename(Death = Case, County = Admin2, State = Province/State)
+    rename(Death = Case, County = Admin2, State = `Province/State`)
 
 us_ <- us_deaths %>%
     inner_join(us_confirmed, by = c("County", "Date", "State")) %>%
@@ -194,6 +194,24 @@ ui <- fluidPage(
 
         # Custom CSS  
         tags$style(HTML("
+
+            body {
+                background-image: url('https://img.freepik.com/free-vector/3d-virus-bacteria-infection-banner-with-text-space_1017-24372.jpg?w=1380&t=st=1714364581~exp=1714365181~hmac=7c887513452dbf7f262c3697db5058d26004d19c04e730a3af65be4ed6c04071');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                position: relative;
+            }
+            body::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(255, 255, 255, 0.7); /* white with 50% opacity */
+                z-index: -1;
+            }
                
             .navbar {
                 background-color: #3768abb5 !important; /* Dark gray background */
@@ -208,10 +226,10 @@ ui <- fluidPage(
                 color: #FFFFFF; 
             }
             .well {
-                background-color: #f5f5f5b0;
+                background-color: #f5f5f5f2;
             }
             .nav-tabs>li>a {
-                color: #FFFFFF; /* White text for inactive tabs */
+                color: #000000; /* White text for inactive tabs */
                 font-weight: bold;
             }
             .nav-tabs>li.active>a,
@@ -226,9 +244,7 @@ ui <- fluidPage(
             }
         "))
     ),
-    setBackgroundImage(
-        src = "https://img.freepik.com/free-vector/3d-virus-bacteria-infection-banner-with-text-space_1017-24372.jpg?w=1380&t=st=1714364581~exp=1714365181~hmac=7c887513452dbf7f262c3697db5058d26004d19c04e730a3af65be4ed6c04071"
-    ),
+   
 
 # Navabar
     navbarPage(
