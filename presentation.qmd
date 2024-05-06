@@ -132,7 +132,10 @@ What is the relationship between total vaccinations and the reduction in active 
 
 ## **Conclusion**
 
--   The
+- Vaccination Impact: The sharp increases in vaccination, shown in the Argentina Moderna vaccine rollout, correlate with reductions in COVID-19 cases, highlighting vaccine effectiveness.
+- Spatial Analysis: Maps reveal variations in recovery rates and case numbers across regions, useful for targeted health interventions.
+- Per Capita Analysis: Normalizing data per 100,000 people allows for accurate comparisons across regions of different sizes, aiding in more effective response strategies.
+- Vaccination and Case Trends: Data from the top vaccinated countries shows that higher vaccination rates lead to fewer severe cases and deaths, underscoring the importance of continued vaccination efforts
 
 ## *Thank You for your time and attention during the presentation!*
 
