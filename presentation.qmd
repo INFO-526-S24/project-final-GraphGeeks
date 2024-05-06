@@ -14,7 +14,6 @@ format:
     auto-animate-duration: 1.5
     logo: images/covid_2.webp
     footer: "[Tracing the COVID-19 Trajectory Using *Shiny*](https://https://info-526-s24.github.io/project-final-GraphGeeks/)"
-    scrollable: true
     tbl-colwidths: auto
   
 editor: visual
