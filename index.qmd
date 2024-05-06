@@ -268,6 +268,8 @@ How has the COVID-19 pandemic trended globally over time, and what correlations 
 
 ### Analysis Q-1
 
+![](images/clipboard-3950227123.png)
+
 ## Question 2
 
 What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
