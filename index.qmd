@@ -17,4 +17,241 @@ execute:
   echo: false
 ---
 
-#### Loading the required libraries
+## Introduction 
+
+In late December 2019, a novel coronavirus, initially designated as 2019-nCoV, emerged in the city of Wuhan, located in China's Hubei province. The outbreak garnered global attention as reports surfaced of individuals developing pneumonia-like symptoms without a clear cause. Complicating matters further, existing vaccines and treatments proved ineffective against the new virus strain.
+
+One of the most concerning aspects of the outbreak was the evidence of human-to-human transmission, signifying the potential for rapid spread across populations. By mid-January 2020, the transmission rate, or rate of infection, began to escalate, prompting heightened international concern and response efforts.
+
+As of 30 January 2020, approximately 8,243 cases of the novel coronavirus had been confirmed worldwide, marking a significant public health challenge requiring swift and coordinated action.
+
+Through our analysis, which includes dynamic and interactive visualizations made possible by Shiny, we aim to provide stakeholders, including policymakers and the public, with intuitive tools to explore and understand the evolving dynamics of the pandemic. These interactive visualizations not only enhance accessibility but also facilitate deeper insights into the spread of the virus, patterns of transmission, the effectiveness of containment measures, and the progress of global vaccination campaigns sourced from Our World in Data. By merging and analyzing vaccination information alongside COVID-19 case data, our goal is to offer a comprehensive understanding of the pandemic's dynamics. Ultimately, our aim is to empower decision-makers with actionable insights derived from rigorous analysis, enabling them to make informed decisions and craft effective strategies to mitigate the impact of the COVID-19 pandemic on communities worldwide.
+
+```{r, warning = FALSE, message = FALSE}
+
+#Installing the pacman library
+if (!require("pacman")) {
+    install.packages("pacman")
+}
+
+#Loading libraries
+pacman::p_load(ggplot2, 
+               dplyr, 
+               colorspace,
+               tidyr, 
+               shiny, 
+               shinythemes,
+               rnaturalearth, 
+               rnaturalearthdata, 
+               BiocManager,
+               readr, 
+               leaflet,
+               ggiraph, 
+               RColorBrewer, 
+               sf,
+               zoo, 
+               shinyWidgets,
+               plotly)
+
+
+```
+
+```{r}
+# set theme for ggplot2
+ggplot2::theme_set(ggplot2::theme_minimal(base_size = 14))
+
+# set width of code output
+options(width = 65)
+
+# set figure parameters for knitr
+knitr::opts_chunk$set(
+    fig.width = 7, # 7" width
+    fig.asp = 0.618, # the golden ratio
+    fig.retina = 3, # dpi multiplier for displaying HTML output on retina
+    fig.align = "center", # center align figures
+    dpi = 300 # higher dpi, sharper image
+)                                    
+```
+
+## Dataset
+
+```{r}
+# Importing the datasets
+
+#Countries dataset
+data <- read_csv("./data/countries.csv")
+
+#Population dataset
+pops <- read_csv("./data/populations.csv")
+
+#US_confirmed cases dataset and then renaming the Case, Admin2 and State
+us_confirmed <- read_csv("./data/us_confirmed.csv") %>%
+    rename(Confirmed = Case, County = Admin2, State = `Province/State`)
+
+#Us_deaths cases dataset and then renaming the columns case, Admin2 and State
+us_deaths <- read_csv("./data/us_deaths.csv") %>%
+    rename(Death = Case, County = Admin2, State = `Province/State`)
+```
+
+```{#Joining us_deaths dataframe, us_confirmed dataframe according to the County, Date and Staet}
+us_ <- us_deaths %>%
+    inner_join(us_confirmed, by = c("County", "Date", "State")) %>%
+    select(Date, County, State, Confirmed, Death) %>%
+    rename(Deaths = Death)
+
+# Global Preprocessing 
+
+# Removing some irrelevant rows
+data <- data %>%
+    filter(!Country %in% c(
+        "Winter Olympics 2022",
+        "Summer Olympics 2020",
+        "Diamond Princess",
+        "MS Zaandam",
+        "Antarctica"
+    ))
+
+# Correcting the name of the countries
+data <- data %>%
+    mutate(Country = case_when(
+        Country == "US" ~ "United States of America",
+        Country == "West Bank and Gaza" ~ "Palestine",
+        Country == "Congo (Brazzaville)" ~ "Dem. Rep. Congo",
+        Country == "Congo (Kinshasa)" ~ "Congo",
+        Country == "Central African Republic" ~ "Central African Rep.",
+        Country == "South Sudan" ~ "S. Sudan",
+        Country == "Cote d'Ivoire" ~ "Côte d'Ivoire",
+        Country == "Taiwan*" ~ "Taiwan",
+        Country == "Korea, South" ~ "South Korea",
+        Country == "Bosnia and Herzegovina" ~ "Bosnia and Herz.",
+        Country == "Dominican Republic" ~ "Dominican Rep.",
+        TRUE ~ Country # Default case to keep original names for other countries
+    ))
+
+# Adding population of each country
+data <- left_join(data, pops, by = "Country")
+
+# Geting the countries choices
+countries_choices <- data |>
+    distinct(Country) |>
+    arrange(Country) |>
+    pull(Country)
+
+# Calculate the daily confirmed cases, recovered cases, and deaths over the whole world.
+data <- data %>%
+    arrange(Date) %>%
+    group_by(Country) %>%
+    mutate(
+        daily_confirmed = ifelse(Confirmed - lag(Confirmed,
+        default = first(Confirmed)) < 0,
+            0,
+            Confirmed - lag(Confirmed, default = first(Confirmed))
+        ),
+        daily_recovered = ifelse(Recovered - lag(Recovered, default = first(Recovered)) < 0,
+            0,
+            Recovered - lag(Recovered, default = first(Recovered))
+        ),
+        daily_deaths = ifelse(Deaths - lag(Deaths, default = first(Deaths)) < 0,
+            0,
+            Deaths - lag(Deaths, default = first(Deaths))
+        )
+    ) %>%
+    ungroup()
+
+# Pivoting the dataset
+long_data <- data %>%
+    pivot_longer(
+        cols = c(daily_confirmed, daily_recovered, daily_deaths),
+        names_to = "Case_Type",
+        values_to = "Cases",
+        names_prefix = "daily_"
+    ) %>%
+    select(-Confirmed, -Recovered, -Deaths)
+
+# Calculating normalized daily confirmed cases, recovered cases, and deaths per 100000
+data <- data %>%
+    mutate(
+        normalized_daily_confirmed = (daily_confirmed / Population) * 100000,
+        normalized_daily_recovered = (daily_recovered / Population) * 100000,
+        normalized_daily_deaths = (daily_deaths / Population) * 100000
+    )
+
+
+# US preprocessing 
+
+# Calculate the total cumulative cases and deaths for each state on each day, converting them to daily by taking the difference from the previous day
+us_state_daily_cumulate <- us_ %>%
+    group_by(Date, State) %>%
+    summarize(
+        Confirmed = sum(Confirmed, na.rm = TRUE),
+        Deaths = sum(Deaths, na.rm = TRUE),
+        .groups = "drop"
+    ) %>%
+    group_by(State) %>%
+    arrange(Date, .by_group = TRUE) %>%
+    mutate(
+        Daily_Confirmed = ifelse(Confirmed - lag(Confirmed, default = first(Confirmed)) < 0,
+            0,
+            Confirmed - lag(Confirmed, default = first(Confirmed))
+        ),
+        Daily_Deaths = ifelse(Deaths - lag(Deaths, default = first(Deaths)) < 0,
+            0,
+            Deaths - lag(Deaths, default = first(Deaths))
+        )
+    )
+
+# Pivoting the dataset
+us_long_data <- us_state_daily_cumulate %>%
+    pivot_longer(
+        cols = c(Daily_Confirmed, Daily_Deaths),
+        names_to = "Case_Type",
+        values_to = "Cases",
+        names_prefix = "daily_"
+    ) %>%
+    select(-Confirmed, -Deaths)
+
+# Geting the US state choices
+states_choices <- us_state_daily_cumulate |>
+    distinct(State) |>
+    arrange(State) |>
+    pull(State)
+
+# Choosing the start and end date for input dates
+start_date <- "2020-01-23"
+end_date <- "2022-04-16"
+
+
+
+# vacination data
+vaccination_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv") %>%
+    mutate(date = as.Date(date, format = "%Y-%m-%d")) %>%
+    group_by(location) %>%
+    # Summarize to find the maximum total vaccinations and get the associated date
+    summarize(
+        Total_Vaccinations = max(total_vaccinations, na.rm = TRUE),
+        date = date[which.max(total_vaccinations)],
+        vaccine = vaccine,
+        .groups = "drop"
+    ) %>%
+    arrange(desc(Total_Vaccinations))
+
+# without preprossed data
+manufacture_data <- read_csv("./data/country_vaccinations_by_manufacturer.csv")
+
+
+# propessed global data
+global_data <- read_csv("./data/countries.csv") %>%
+    mutate(Date = as.Date(Date)) %>%
+    pivot_longer(
+        cols = c(Confirmed, Recovered, Deaths),
+        names_to = "Case_Type",
+        values_to = "Cases"
+    ) %>%
+    mutate(Case_Type = tolower(gsub(" ", "_", Case_Type))) %>%
+    na.omit()
+
+```
+
+```{r}
+
+```
