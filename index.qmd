@@ -5,7 +5,7 @@ author:
   - name: "Devendran Vemula<br> Omid Zandi<br> Gorantla Sai Laasya<br> Rajitha Reddy Tiruthani<br> Gowtham GopalaKrishnan <br> Mrunali Yadav <br>"
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Project description"
+description: "Our project is dedicated to analyzing global and US-specific COVID-19 trends alongside the impact of vaccination efforts. Through dynamic visualizations powered by the Shiny app package, we aim to uncover key patterns and insights to inform policymakers and the public. By merging data from reputable sources like Our World in Data, we provide a comprehensive view of the pandemic's dynamics, including transmission rates, containment measures' efficacy, and vaccination progress. Our ultimate goal is to empower decision-makers with actionable insights, aiding in the effective response to the global health crisis."
 format:
    html:
     code-tools: true
@@ -26,6 +26,10 @@ One of the most concerning aspects of the outbreak was the evidence of human-to-
 As of 30 January 2020, approximately 8,243 cases of the novel coronavirus had been confirmed worldwide, marking a significant public health challenge requiring swift and coordinated action.
 
 Through our analysis, which includes dynamic and interactive visualizations made possible by Shiny, we aim to provide stakeholders, including policymakers and the public, with intuitive tools to explore and understand the evolving dynamics of the pandemic. These interactive visualizations not only enhance accessibility but also facilitate deeper insights into the spread of the virus, patterns of transmission, the effectiveness of containment measures, and the progress of global vaccination campaigns sourced from Our World in Data. By merging and analyzing vaccination information alongside COVID-19 case data, our goal is to offer a comprehensive understanding of the pandemic's dynamics. Ultimately, our aim is to empower decision-makers with actionable insights derived from rigorous analysis, enabling them to make informed decisions and craft effective strategies to mitigate the impact of the COVID-19 pandemic on communities worldwide.
+
+## Abstract
+
+This project focuses on analyzing global and US-specific COVID-19 trends and vaccination impacts using dynamic visualizations powered by the Shiny app package. By merging data from reputable sources like Our World in Data, we aim to provide comprehensive insights into the pandemic's dynamics, including transmission rates, containment measures' efficacy, and vaccination progress. Our objective is to empower policymakers and the public with actionable insights to effectively respond to the ongoing health crisis.
 
 ```{r, warning = FALSE, message = FALSE}
 
@@ -73,7 +77,13 @@ knitr::opts_chunk$set(
 )                                    
 ```
 
-## Dataset
+## Dataset and Description
+
+The dataset comprises several files providing detailed information on COVID-19 cases and vaccination efforts globally. The "full_grouped.csv" file offers day-to-day country-wise case counts, including County/State/Province level data. "covid_19_clean_complete.csv" also provides day-to-day country-wise case counts but lacks County/State/Province level data. "country_wise_latest.csv" presents the latest country-level case statistics, while "day_wise.csv" offers day-wise case counts without country-level data. "usa_county_wise.csv" contains day-to-day county-level case counts specifically for the USA. Additionally, "worldometer_data.csv" provides the latest data from the Worldometer website.
+
+The vaccination dataset includes key information such as the country, ISO code, and date of data entry. It also encompasses metrics such as the total number of vaccinations, total number of people vaccinated, and total number of people fully vaccinated. Other metrics include daily vaccinations, total vaccinations per hundred, and daily vaccinations per million. Moreover, the dataset identifies the vaccines used in each country and provides insights into vaccination rates relative to the total population. This comprehensive dataset enables detailed analysis of global vaccination efforts and their impact on combating the COVID-19 pandemic.
+
+[Covid-19](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv) and [Vaccine](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress/data)
 
 ```{r}
 # Importing the datasets
@@ -252,6 +262,16 @@ global_data <- read_csv("./data/countries.csv") %>%
 
 ```
 
-```{r}
+## Question 1
 
-```
+How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
+
+### Analysis Q-1
+
+## Question 2
+
+What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
+
+### Analysis Q-2
+
+## Conclusion 
