@@ -266,14 +266,36 @@ global_data <- read_csv("./data/countries.csv") %>%
 
 How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
 
-### Analysis Q-1
+### Analysis:
+We analyze the global spread and recovery from COVID-19 by creating detailed time series visualizations of confirmed cases and recovery rates. This analysis helps us understand how the virus has propagated and been managed over time across different geographies.
 
+### Time Series of Country’s COVID-19
 ![](images/clipboard-3950227123.png)
+
+### Time Series of US’s COVID- 19
+![](images/clipboard-1312047739.png)
+
+### Detailed Discussion:
+The time series visualization demonstrates distinct waves of COVID-19 infections globally, with corresponding recoveries. Analyzing these trends helps to identify the effectiveness of public health interventions and the burden on health systems over time. This visualization particularly highlights the periods where recoveries lagged behind new cases, indicating stress points in healthcare responses.
 
 ## Question 2
 
 What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
 
-### Analysis Q-2
+### Analysis:
+We explore the relationship between vaccination rates and active COVID-19 cases to evaluate the effectiveness of vaccination campaigns across different regions in the USA. We employ scatter plots and regression analysis to quantify this relationship.
+
+### Spatial Distribution for Cases
+![](images/clipboard-1751926279.png)
+
+### Normalized Spatial Distribution
+![](images/clipboard-3291235951.png)
+
+## Top - 10 Vaccinated Countries
+![](images/clipboard-2859841875.png)
+
+## Time Series Vaccine Data by Manufacturer
+![](images/clipboard-1209656722.png)
 
 ## Conclusion 
+Our analysis through interactive Shiny visualizations provides significant insights into the dynamics of the COVID-19 pandemic. Question 1("How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics?") revealed the global patterns of infection and recovery, underscoring the critical times and effectiveness of interventions. Question 2("What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?") illustrated the crucial role of vaccinations in reducing active cases, highlighting the success of vaccination campaigns in mitigating the pandemic's impact. This project not only enhances our understanding of the pandemic but also supports policymakers and public health officials in making informed decisions based on data-driven insights.
