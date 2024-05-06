@@ -327,7 +327,7 @@ We explore the relationship between vaccination rates and active COVID-19 cases 
 ### Spatial Distribution for Cases
 ![](images/clipboard-1751926279.png)
 
-##Each Day Spatial Distribution of Confirmed COVID-19 Cases (Recovered): 
+## Each Day Spatial Distribution of Confirmed COVID-19 Cases (Recovered): 
 This map visualizes the recovery rates across various regions on a specific date. The map highlights areas with different recovery rates using a color gradient, providing a quick visual reference to understand which areas have higher recovery rates. Darker shades might indicate higher numbers of recoveries or more effective response measures.
 
 ### Normalized Spatial Distribution
@@ -345,7 +345,7 @@ This bar chart compares the total number of confirmed cases, deaths, and recover
 ## Time Series Vaccine Data by Manufacturer
 ![](images/clipboard-1209656722.png)
 
-##Vaccination Data by Manufacturer: 
+## Vaccination Data by Manufacturer: 
 This graph shows the total number of vaccinations administered in Argentina using the Moderna vaccine. The plot type selected is a scatter plot, which illustrates the cumulative vaccinations over time, showing significant increases at specific points. This could indicate the arrival of vaccine batches or the initiation of new phases in vaccination campaigns. The sharp rise in mid-2021 suggests a successful acceleration in vaccination efforts.
 
 ## Conclusion 
