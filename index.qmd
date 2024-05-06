@@ -83,6 +83,35 @@ The dataset comprises several files providing detailed information on COVID-19 c
 
 The vaccination dataset includes key information such as the country, ISO code, and date of data entry. It also encompasses metrics such as the total number of vaccinations, total number of people vaccinated, and total number of people fully vaccinated. Other metrics include daily vaccinations, total vaccinations per hundred, and daily vaccinations per million. Moreover, the dataset identifies the vaccines used in each country and provides insights into vaccination rates relative to the total population. This comprehensive dataset enables detailed analysis of global vaccination efforts and their impact on combating the COVID-19 pandemic.
 
+The provided Shiny app is an interactive web application designed for visualizing COVID-19 data, which includes confirmed cases, deaths, and vaccination progress both globally and in the United States. Here's a breakdown of how the app functions:
+
+### Setup and Data Preparation
+1. **Library Management**: The app utilizes the `pacman` package to efficiently manage library installations and loading. Key libraries include `ggplot2` for plotting, `dplyr` for data manipulation, and `shiny` for building the interactive web components.
+2. **Visualization and Display Settings**: It sets a minimal theme for `ggplot2` plots and configures display options such as output width and image sizing, crucial for the clarity and aesthetics of the visual output in R Markdown.
+3. **Data Importation**: Various datasets are loaded from CSV files, encompassing global COVID-19 cases and specific datasets such as U.S. confirmed cases and deaths, along with population data.
+4. **Data Cleaning and Transformation**: The app conducts data cleaning by removing irrelevant entries and standardizes country names for consistency. It also performs calculations to derive daily metrics such as confirmed cases, recoveries, and deaths. Additionally, it normalizes these figures per 100,000 population for more equitable regional comparisons.
+
+### User Interface (`ui`)
+- **Structured Layout**: The app is styled using `shinytheme` and organized into a navbar format with multiple tabs, each dedicated to different data visualizations.
+- **Interactive Inputs**: Dropdown menus allow users to select countries or U.S. states, specify date ranges, and choose data types for display.
+- **Visual Output Areas**: Designated spaces within the app are reserved for dynamically rendered plots and maps based on user interactions.
+
+### Server Logic (`server`)
+- **Reactive Outputs**: This section processes the data based on user inputs and generates visualizations accordingly. It includes:
+   - **Time Series Plots**: Both global and U.S. data are visualized through time series plots generated with `ggplot2`, reflecting the temporal progression of COVID-19 metrics as specified by the user.
+   - **Interactive Maps**: Spatial distributions of COVID-19 metrics are displayed using `leaflet`, offering interactive maps that provide both absolute numbers and data normalized per 100,000 inhabitants.
+   - **Vaccination Data Visualizations**: Relationships between vaccination efforts and changes in COVID-19 case numbers are explored through interactive `plotly` bar charts and scatter plots.
+
+### Key Functionalities
+- **Dynamic Data Processing**: The server dynamically filters and processes data according to current user selections, such as chosen geographical regions or time frames.
+- **Engaging Visualizations**: Users can interact directly with the data through embedded interactive elements within the visualizations, such as tooltips in maps and customizable plots.
+- **Data Aggregation and Analysis**: The app aggregates vaccination data to display total vaccinations over time and correlates these figures with case numbers to provide insights into the impact of vaccination campaigns.
+
+### Custom Styling
+- Custom CSS is employed to enhance the visual appeal and user experience of the app, modifying elements like backgrounds, text styles, and navigational components.
+
+In essence, this Shiny app serves as a comprehensive platform for in-depth exploration of COVID-19 data, enabling users to analyze trends, compare different regions, and assess the effects of health policies and vaccination drives through rich, interactive visualizations.
+
 [Covid-19](https://www.kaggle.com/datasets/imdevskp/corona-virus-report?resource=download&select=country_wise_latest.csv) and [Vaccine](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress/data)
 
 ```{r}
@@ -103,7 +132,9 @@ us_deaths <- read_csv("./data/us_deaths.csv") %>%
     rename(Death = Case, County = Admin2, State = `Province/State`)
 ```
 
-```{#Joining us_deaths dataframe, us_confirmed dataframe according to the County, Date and Staet}
+```{r}
+
+#Joining us_deaths dataframe, us_confirmed dataframe according to the County, Date and State
 us_ <- us_deaths %>%
     inner_join(us_confirmed, by = c("County", "Date", "State")) %>%
     select(Date, County, State, Confirmed, Death) %>%
@@ -266,14 +297,60 @@ global_data <- read_csv("./data/countries.csv") %>%
 
 How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics (like cases and recoveries)?
 
-### Analysis Q-1
+### Analysis:
+We analyze the global spread and recovery from COVID-19 by creating detailed time series visualizations of confirmed cases and recovery rates. This analysis helps us understand how the virus has propagated and been managed over time across different geographies.
 
+### Time Series of Country’s COVID-19
 ![](images/clipboard-3950227123.png)
+
+### Time Series of US’s COVID- 19
+![](images/clipboard-1312047739.png)
+
+### Detailed Discussion:
+The time series visualization demonstrates distinct waves of COVID-19 infections globally, with corresponding recoveries.
+
+Correlation between Cases and Deaths: The relationship between confirmed cases and deaths is a critical metric for understanding the lethality of the virus and the effectiveness of healthcare responses.
+
+Cases vs. Recoveries: The alignment of spikes in recoveries following the peaks in confirmed cases indicates the time it typically takes for infected individuals to recover. A close correlation here suggests accurate tracking and reporting in the health system.
+
+Trends Over Time: Observing the full timeline from the beginning of 2020 to early 2022 allows analysts to evaluate the impact of public health interventions like lockdowns, social distancing measures, and vaccinations. For instance, a noticeable decrease in cases and deaths over time might correlate with successful vaccination campaigns.
+
+Global vs. Local Trends: While the general patterns might be similar (waves of infections followed by corresponding recoveries), the magnitude and timing can vary significantly by region due to factors like population density, public health policies, and community compliance with health measures.
 
 ## Question 2
 
 What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
 
-### Analysis Q-2
+### Analysis:
+We explore the relationship between vaccination rates and active COVID-19 cases to evaluate the effectiveness of vaccination campaigns across different regions in the USA. We employ scatter plots and regression analysis to quantify this relationship.
+
+### Spatial Distribution for Cases
+![](images/clipboard-1751926279.png)
+
+## Each Day Spatial Distribution of Confirmed COVID-19 Cases (Recovered): 
+This map visualizes the recovery rates across various regions on a specific date. The map highlights areas with different recovery rates using a color gradient, providing a quick visual reference to understand which areas have higher recovery rates. Darker shades might indicate higher numbers of recoveries or more effective response measures.
+
+### Normalized Spatial Distribution
+![](images/clipboard-3291235951.png)
+
+## Each Day Spatial Distribution of COVID-19 Different Cases per 100,000 People:
+This map provides a per capita comparison of confirmed COVID-19 cases on a selected date. It uses a color gradient to represent the density of cases per 100,000 people, offering insights into the relative severity of outbreaks in different regions. This normalized view helps to account for population differences when comparing the spread of COVID-19 across countries.
+
+## Top - 10 Vaccinated Countries
+![](images/clipboard-2859841875.png)
+
+## COVID-19 Case Types in Top 10 Vaccinated Countries: 
+This bar chart compares the total number of confirmed cases, deaths, and recoveries in the top 10 countries with the highest vaccination rates. The visualization clearly delineates the proportion of each case type, allowing for an assessment of the impact of vaccination programs on case outcomes. Countries with higher bars might indicate larger populations or more widespread testing alongside vaccination efforts.
+
+## Time Series Vaccine Data by Manufacturer
+![](images/clipboard-1209656722.png)
+
+## Vaccination Data by Manufacturer: 
+This graph shows the total number of vaccinations administered in Argentina using the Moderna vaccine. The plot type selected is a scatter plot, which illustrates the cumulative vaccinations over time, showing significant increases at specific points. This could indicate the arrival of vaccine batches or the initiation of new phases in vaccination campaigns. The sharp rise in mid-2021 suggests a successful acceleration in vaccination efforts.
 
 ## Conclusion 
+Our analysis through interactive Shiny visualizations provides significant insights into the dynamics of the COVID-19 pandemic. Question 1("How has the COVID-19 pandemic trended globally over time, and what correlations can be observed between different pandemic metrics?") revealed the global patterns of infection and recovery, underscoring the critical times and effectiveness of interventions. Question 2("What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?") illustrated the crucial role of vaccinations in reducing active cases, highlighting the success of vaccination campaigns in mitigating the pandemic's impact. This project not only enhances our understanding of the pandemic but also supports policymakers and public health officials in making informed decisions based on data-driven insights.
+
+## References
+
+\[1\] Source Data link : [https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv](https://www.kaggle.com/datasets/gpreda/covid-world-vaccination-progress?select=country_vaccinations.csv)

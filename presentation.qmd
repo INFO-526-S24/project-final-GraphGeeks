@@ -12,6 +12,10 @@ format:
     transition: convex
     theme:  ['data/customtheming.scss']
     auto-animate-duration: 1.5
+    logo: images/covid_2.webp
+    footer: "[Tracing the COVID-19 Trajectory Using *Shiny*](https://https://info-526-s24.github.io/project-final-GraphGeeks/)"
+    scrollable: true
+    tbl-colwidths: auto
   
 editor: visual
 execute:
@@ -90,12 +94,6 @@ data("penguins")
 
 ![](images/clipboard-1312047739.png)
 
-## Question -2
-
-. . .
-
-What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
-
 ## Spatial Distribution for Cases
 
 . . .
@@ -108,6 +106,12 @@ What is the relationship between total vaccinations and the reduction in active 
 
 ![](images/clipboard-3291235951.png)
 
+## Question -2
+
+. . .
+
+What is the relationship between total vaccinations and the reduction in active COVID-19 cases across different Counties in USA?
+
 ## Top - 10 Vaccinated Countries
 
 . . .
@@ -119,6 +123,10 @@ What is the relationship between total vaccinations and the reduction in active 
 . . .
 
 ![](images/clipboard-1209656722.png)
+
+## **Conclusion**
+
+-   The
 
 ## *Thank You for your time and attention during the presentation!*
 
