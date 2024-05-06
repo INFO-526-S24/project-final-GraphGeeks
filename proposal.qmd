@@ -4,8 +4,8 @@ subtitle: "Proposal"
 author: 
   - name: "**GraphGeeks** - Devendran, Omid, G Sai Laasya"
   - name: "Rajitha, Gowtham, Mrunali"
-    affiliations:
-      - name: "School of Information, University of Arizona"
+affiliations:
+  - name: "School of Information, University of Arizona"
 description: "The project analyzes COVID-19 trends and vaccination impacts globally and in the USA, using visualizations to reveal key patterns and insights."
 format:
   html:
