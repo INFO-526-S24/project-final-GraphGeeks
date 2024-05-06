@@ -1,0 +1,23 @@
+---
+title: "Tracing the COVID-19 Trajectory Using **Shiny**"
+subtitle: "INFO 526 - Project Final"
+editor: visual
+execute:
+  warning: false
+  echo: false
+---
+
+<style>
+/* Hide the sidebar */
+.margin-sidebar, .sidebar-unpinned {
+  display: none !important;
+}
+
+/* Set width to 100% for the document content */
+#quarto-document-content {
+  width: 100% !important;
+}
+</style>
+
+```{=html}
+<iframe src="https://covid19data.shinyapps.io/project-final-graphgeeks/" style="width:100%; height:600px; border:none;"></iframe>

@@ -1,5 +1,5 @@
 ---
-title: "Tracing the COVID-19 Trajectory Using Shiny"
+title: "Tracing the COVID-19"
 format: html
 editor: visual
 ---
