@@ -154,6 +154,22 @@ Dataset: We will utilize the `day_wise_data` dataset, which provides daily globa
 | Adding aesthethics to ShinyApp | Incomplete | Devendran Vemula, Omid Zandi                      | 17 Apr 2024 | Moderate | Adding the aesthethics                                                                                                                                                                                 |
 | Presnetation                   | Incomplete | Devendran Vemula, Gowtham GopalaKrishnan          | 20 Apr 2024 | High     | Creating the presentation                                                                                                                                                                              |
 
+## Repo Organization
+
+The following folders comprise the project repository
+
+-   *.github/:* This folder contains GitHub-related assets such as action workflows and issue templates, which are used to automate tasks and standardize the issue-reporting process.
+-   *\_extra/:* This folder stores "frozen" environment configuration files, detailing the project’s dependencies and setup specifics, enabling consistent reproduction of the development environment.
+-   *\_freeze/:* There are frozen environment files in this directory that contain detailed information on the dependencies and environment setup of the project.
+-   *data/:*  Dedicated to project data storage, this folder contains essential files like input data, datasets, and other critical information that the project relies on.
+-   *images/:*This is the repository for all visual content, including charts, diagrams, and screenshots, used throughout the project's documentation and presentations.
+-   *.gitignore:* A configuration file that instructs Git on which files and directories to exclude from version control, ensuring efficient management of the repository.
+-   *README.md:* This is the project's main information document, providing a comprehensive guide to setup, usage, and a general overview of the project's goals and scope.
+-   *\_quarto.yml:* This Quarto configuration file controls how Quarto documents are generated and displayed, allowing for customized output and various document settings.
+-   *about.qmd:* A Quarto Markdown file offering further project context, detailing the project’s objectives, background information, contributor details, and other related content.
+-   *index.qmd:* The main documentation page for the project, created with Quarto. It contains a detailed presentation of the project, including code snippets and visual elements.
+-   *app.R:* As our project involves a Shiny app or a similar interactive application, the app.R file would typically contain the R code needed to build and run the app, including UI elements, server logic, and reactive components.
+
 ::: {.column width="50%"}
 ![](images/Timeli.jpg)
 :::
