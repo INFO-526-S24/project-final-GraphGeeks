@@ -1,6 +1,6 @@
 ---
-title: "Tracing the COVID-19 Trajectory Using **Shiny**"
-subtitle: "Proposal"
+title: "Tracing the COVID-19 Trajectory"
+subtitle: "Using **Shiny**"
 author: 
   - name: "**GraphGeeks** - Devendran, Omid, G Sai Laasya"
   - name: "Rajitha, Gowtham, Mrunali"
