@@ -1,7 +1,13 @@
 ---
 title: "Tracing the COVID-19 Trajectory Using **Shiny**"
 subtitle: "INFO 526 - Spring 2024 - Project Final"
-author: "Devendran Vemula<br> Omid Zandi<br> Gorantla Sai Laasya<br> Rajitha Reddy Tiruthani<br> Gowtham GopalaKrishnan <br> Mrunali Yadav <br>"
+author: |
+  Devendran Vemula<br>
+  Omid Zandi<br>
+  Gorantla Sai Laasya<br>
+  Rajitha Reddy Tiruthani<br>
+  Gowtham GopalaKrishnan<br>
+  Mrunali Yadav<br>
 title-slide-attributes:
   data-background-image: images/covid_2.webp
   data-background-size: stretch
@@ -10,16 +16,17 @@ title-slide-attributes:
 format:
   revealjs:
     transition: convex
-    theme:  ['data/customtheming.scss']
+    theme: data/customtheming.scss
     auto-animate-duration: 1.5
     logo: images/covid_2.webp
-    footer: "[Tracing the COVID-19 Trajectory Using *Shiny*](https://https://info-526-s24.github.io/project-final-GraphGeeks/)"
-    tbl-colwidths: auto
-  
+    footer: "[Tracing the COVID-19 Trajectory Using *Shiny*](https://info-526-s24.github.io/project-final-GraphGeeks/)"
+    scrollable: true
+    tbl-colwidths: auto
 editor: visual
 execute:
   echo: false
 ---
+
 
 ```{r}
 #| label: load-packages
