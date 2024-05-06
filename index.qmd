@@ -103,7 +103,9 @@ us_deaths <- read_csv("./data/us_deaths.csv") %>%
     rename(Death = Case, County = Admin2, State = `Province/State`)
 ```
 
-```{#Joining us_deaths dataframe, us_confirmed dataframe according to the County, Date and Staet}
+```{r}
+
+#Joining us_deaths dataframe, us_confirmed dataframe according to the County, Date and State
 us_ <- us_deaths %>%
     inner_join(us_confirmed, by = c("County", "Date", "State")) %>%
     select(Date, County, State, Confirmed, Death) %>%
